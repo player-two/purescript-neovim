@@ -4,14 +4,14 @@ import Prelude
 import Control.Monad.Eff (Eff())
 import Control.Monad.Eff.Console (log, CONSOLE)
 import Control.Monad.Eff.Exception (EXCEPTION)
-import Data.Array (drop, uncons)
+import Data.Array (drop, snoc, uncons)
 import Data.Either (either, Either(Left, Right))
-import Data.Foldable (foldl)
+import Data.Foldable (foldl, sequence_)
 import Data.Foreign (unsafeFromForeign)
 import Data.Foreign.Class (readJSON, readProp, class IsForeign)
 --import Data.Foreign.Undefined (unUndefined, Undefined)
 import Data.Maybe (Maybe(Just, Nothing))
-import Data.StrMap (keys, StrMap)
+import Data.StrMap (empty, fold, insert, keys, lookup, StrMap)
 import Data.String (drop, joinWith, split, take, toUpper) as Str
 import Data.String.Regex (match, noFlags, regex, test, Regex)
 import Node.Buffer (toString, BUFFER)
@@ -19,6 +19,9 @@ import Node.ChildProcess (exec, ExecResult, CHILD_PROCESS)
 import Node.Encoding (Encoding(UTF8))
 import Node.FS (FS)
 import Node.FS.Sync (writeTextFile)
+
+import DefineJs as DefineJs
+
 
 main :: forall e. Eff (buffer :: BUFFER, cp :: CHILD_PROCESS, console :: CONSOLE, err :: EXCEPTION, fs :: FS | e) Unit
 main = exec "nvim --api-info | msgpack2json" handle
@@ -40,7 +43,6 @@ instance apiInfoIsForeign :: IsForeign ApiInfo where
     ts <- readProp "types" value
     pure $ ApiInfo { functions: fs , typeDefs: ts }
 
---data Function = Function (Array Parameter) Name CanFail ReturnType Async
 data Func = Func
   { name :: String
   , parameters :: Array Parameter
@@ -138,25 +140,22 @@ mapType t
     where wrap subT = "(Array " <> subT <> ")"
   | otherwise = t
 
-mapReturnType :: String -> String -> String
-mapReturnType t name
-  -- | test' arrayOfRegex t
-  | otherwise = mapType t
-
 defFunc :: Func -> String
-defFunc (Func f) = "foreign import " <> name <> "' :: forall e. " <> args <> "(Error -> Eff e Unit) -> (" <> ret <>  " -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit" <> "\n"
+defFunc (Func f) = "foreign import " <> name <> "' :: forall e. " <> args <> "(Error -> Eff e Unit) -> (" <> ret <>  " -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit" <> "\n\n"
   <> name <> " :: forall a. " <> args <> "Aff (plugin :: PLUGIN | a) " <> ret <> "\n"
-  <> name <> " " <> argNames <> " = makeAff $ " <> name <> "' " <> argNames <> "\n\n"
+  <> name <> " " <> argNames <> " = makeAff $ " <> name <> "' " <> argNames <> "\n\n\n"
     where name = fnName f.name
           args = fnArgs f.parameters
           argNames = fnArgNames f.parameters
-          ret = mapReturnType f.returnType f.name
+          ret = mapType f.returnType
 
-writeTextFile' = writeTextFile UTF8
+defForeignFunc :: Func -> String
+defForeignFunc (Func f) = DefineJs.defAsyncFunc (fnName f.name) (map argName f.parameters)
+  where argName [_, n] = n
+        argName _ = ""
 
-moduleDef = """
-module Neovim.Temp where
 
+imports = """
 import Prelude
 import Control.Monad.Aff (makeAff, Aff)
 import Control.Monad.Eff (Eff)
@@ -165,9 +164,33 @@ import Data.Foreign (Foreign)
 import Data.StrMap (StrMap)
 
 import Neovim.Plugin (PLUGIN)
+import Neovim.Types
 
 """ 
 
+groupBy :: forall x. Array x -> (x -> String) -> StrMap (Array x)
+groupBy xs fn = foldl (\m x -> appendToGroup m (fn x) x) empty xs
+  where appendToGroup m k v = insert k (case lookup k m of
+                                             Just others -> snoc others v
+                                             Nothing -> [v]) m
+
+splitByModule :: (Array Func) -> StrMap (Array Func)
+splitByModule fs = groupBy fs moduleName
+  where moduleName (Func f) = case (uncons <<< Str.split "_") f.name of
+                                   Just { head: m } -> titlecase m
+                                   Nothing -> "unknown" -- TODO: throw error
+
+writeTextFile' = writeTextFile UTF8
+
+defineModule :: forall e. String -> (Array Func) -> Eff (err :: EXCEPTION, fs :: FS | e) Unit
+defineModule m fs = sequence_ <<< map (\fn -> fn fs) $ effs
+  where effs = [ writeTextFile' ("./src/Neovim/" <> m <> ".purs") <<< foldl (\s f -> s <> defFunc f) header
+               , writeTextFile' ("./src/Neovim/" <> m <> ".js") <<< foldl (\s f -> s <> defForeignFunc f) DefineJs.header
+               ]
+        header = "module Neovim." <> m <> " where\n" <> imports <> "\n"
+
 buildInterface :: forall e. ApiInfo -> Eff (err :: EXCEPTION, fs :: FS | e) Unit
-buildInterface (ApiInfo api) = writeTextFile' "./src/Neovim/Temp.purs" (moduleDef <> contents)
-  where contents = (defTypes <<< keys <<< getDefs) api.typeDefs <> foldl (\s f -> s <> defFunc f) "\n" api.functions
+buildInterface (ApiInfo api) = sequence_ $ fold (\arr k v -> snoc arr (defineModule k v)) [types] modules
+  where modules = splitByModule api.functions
+        types = writeTextFile' ("./src/Neovim/Types.purs") $ foldl (<>) "module Neovim.Types where\n\n" (map defImport (keys modules))
+        defImport d = "foreign import data " <> d <> " :: *\n"
