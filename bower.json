@@ -1,0 +1,20 @@
+{
+  "name": "purescript-neovim",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-console": "^1.0.0",
+    "purescript-node-buffer": "~1.0.0",
+    "purescript-aff": "~1.0.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^1.0.0",
+    "purescript-foreign": "~1.0.0",
+    "purescript-maps": "~1.0.0",
+    "purescript-node-fs": "~1.0.0"
+  }
+}
