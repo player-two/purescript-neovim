@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports["lineCount'"] = function (buffer) {
+exports["lineCount'"] = function (buffer) {
   return function (error) {
     return function (success) {
       return function () {
@@ -15,7 +15,7 @@ module.exports["lineCount'"] = function (buffer) {
     }
   }
 }
-module.exports["getLine'"] = function (buffer) {
+exports["getLine'"] = function (buffer) {
   return function (index) {
     return function (error) {
       return function (success) {
@@ -32,7 +32,7 @@ module.exports["getLine'"] = function (buffer) {
     }
   }
 }
-module.exports["setLine'"] = function (buffer) {
+exports["setLine'"] = function (buffer) {
   return function (index) {
     return function (line) {
       return function (error) {
@@ -51,7 +51,7 @@ module.exports["setLine'"] = function (buffer) {
     }
   }
 }
-module.exports["delLine'"] = function (buffer) {
+exports["delLine'"] = function (buffer) {
   return function (index) {
     return function (error) {
       return function (success) {
@@ -68,7 +68,7 @@ module.exports["delLine'"] = function (buffer) {
     }
   }
 }
-module.exports["getLineSlice'"] = function (buffer) {
+exports["getLineSlice'"] = function (buffer) {
   return function (start) {
     return function (end) {
       return function (include_start) {
@@ -91,7 +91,7 @@ module.exports["getLineSlice'"] = function (buffer) {
     }
   }
 }
-module.exports["getLines'"] = function (buffer) {
+exports["getLines'"] = function (buffer) {
   return function (start) {
     return function (end) {
       return function (strict_indexing) {
@@ -112,7 +112,7 @@ module.exports["getLines'"] = function (buffer) {
     }
   }
 }
-module.exports["setLineSlice'"] = function (buffer) {
+exports["setLineSlice'"] = function (buffer) {
   return function (start) {
     return function (end) {
       return function (include_start) {
@@ -137,7 +137,7 @@ module.exports["setLineSlice'"] = function (buffer) {
     }
   }
 }
-module.exports["setLines'"] = function (buffer) {
+exports["setLines'"] = function (buffer) {
   return function (start) {
     return function (end) {
       return function (strict_indexing) {
@@ -160,7 +160,7 @@ module.exports["setLines'"] = function (buffer) {
     }
   }
 }
-module.exports["getVar'"] = function (buffer) {
+exports["getVar'"] = function (buffer) {
   return function (name) {
     return function (error) {
       return function (success) {
@@ -177,7 +177,7 @@ module.exports["getVar'"] = function (buffer) {
     }
   }
 }
-module.exports["setVar'"] = function (buffer) {
+exports["setVar'"] = function (buffer) {
   return function (name) {
     return function (value) {
       return function (error) {
@@ -196,7 +196,7 @@ module.exports["setVar'"] = function (buffer) {
     }
   }
 }
-module.exports["delVar'"] = function (buffer) {
+exports["delVar'"] = function (buffer) {
   return function (name) {
     return function (error) {
       return function (success) {
@@ -213,7 +213,7 @@ module.exports["delVar'"] = function (buffer) {
     }
   }
 }
-module.exports["getOption'"] = function (buffer) {
+exports["getOption'"] = function (buffer) {
   return function (name) {
     return function (error) {
       return function (success) {
@@ -230,7 +230,7 @@ module.exports["getOption'"] = function (buffer) {
     }
   }
 }
-module.exports["setOption'"] = function (buffer) {
+exports["setOption'"] = function (buffer) {
   return function (name) {
     return function (value) {
       return function (error) {
@@ -249,7 +249,7 @@ module.exports["setOption'"] = function (buffer) {
     }
   }
 }
-module.exports["getNumber'"] = function (buffer) {
+exports["getNumber'"] = function (buffer) {
   return function (error) {
     return function (success) {
       return function () {
@@ -264,7 +264,7 @@ module.exports["getNumber'"] = function (buffer) {
     }
   }
 }
-module.exports["getName'"] = function (buffer) {
+exports["getName'"] = function (buffer) {
   return function (error) {
     return function (success) {
       return function () {
@@ -279,7 +279,7 @@ module.exports["getName'"] = function (buffer) {
     }
   }
 }
-module.exports["setName'"] = function (buffer) {
+exports["setName'"] = function (buffer) {
   return function (name) {
     return function (error) {
       return function (success) {
@@ -296,7 +296,7 @@ module.exports["setName'"] = function (buffer) {
     }
   }
 }
-module.exports["isValid'"] = function (buffer) {
+exports["isValid'"] = function (buffer) {
   return function (error) {
     return function (success) {
       return function () {
@@ -311,7 +311,7 @@ module.exports["isValid'"] = function (buffer) {
     }
   }
 }
-module.exports["insert'"] = function (buffer) {
+exports["insert'"] = function (buffer) {
   return function (lnum) {
     return function (lines) {
       return function (error) {
@@ -330,7 +330,7 @@ module.exports["insert'"] = function (buffer) {
     }
   }
 }
-module.exports["getMark'"] = function (buffer) {
+exports["getMark'"] = function (buffer) {
   return function (name) {
     return function (error) {
       return function (success) {
@@ -347,7 +347,7 @@ module.exports["getMark'"] = function (buffer) {
     }
   }
 }
-module.exports["addHighlight'"] = function (buffer) {
+exports["addHighlight'"] = function (buffer) {
   return function (src_id) {
     return function (hl_group) {
       return function (line) {
@@ -372,7 +372,7 @@ module.exports["addHighlight'"] = function (buffer) {
     }
   }
 }
-module.exports["clearHighlight'"] = function (buffer) {
+exports["clearHighlight'"] = function (buffer) {
   return function (src_id) {
     return function (line_start) {
       return function (line_end) {

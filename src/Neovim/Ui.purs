@@ -11,21 +11,21 @@ import Neovim.Plugin (PLUGIN)
 import Neovim.Types
 
 
-foreign import attach' :: forall e. Int -> Int -> Boolean -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import attach' :: forall e1 e2. Vim -> Int -> Int -> Boolean -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-attach :: forall a. Int -> Int -> Boolean -> Aff (plugin :: PLUGIN | a) Unit
-attach width height enable_rgb = makeAff $ attach' width height enable_rgb
-
-
-foreign import detach' :: forall e. (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
-
-detach :: forall a. Aff (plugin :: PLUGIN | a) Unit
-detach  = makeAff $ detach' 
+attach :: forall a. Vim -> Int -> Int -> Boolean -> Aff (plugin :: PLUGIN | a) Unit
+attach vim width height enable_rgb = makeAff $ attach' vim width height enable_rgb
 
 
-foreign import tryResize' :: forall e. Int -> Int -> (Error -> Eff e Unit) -> (Foreign -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import detach' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-tryResize :: forall a. Int -> Int -> Aff (plugin :: PLUGIN | a) Foreign
-tryResize width height = makeAff $ tryResize' width height
+detach :: forall a. Vim -> Aff (plugin :: PLUGIN | a) Unit
+detach vim = makeAff $ detach' vim
+
+
+foreign import tryResize' :: forall e1 e2. Vim -> Int -> Int -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+
+tryResize :: forall a. Vim -> Int -> Int -> Aff (plugin :: PLUGIN | a) Foreign
+tryResize vim width height = makeAff $ tryResize' vim width height
 
 

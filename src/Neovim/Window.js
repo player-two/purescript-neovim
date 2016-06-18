@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports["getBuffer'"] = function (window) {
+exports["getBuffer'"] = function (window) {
   return function (error) {
     return function (success) {
       return function () {
@@ -15,7 +15,7 @@ module.exports["getBuffer'"] = function (window) {
     }
   }
 }
-module.exports["getCursor'"] = function (window) {
+exports["getCursor'"] = function (window) {
   return function (error) {
     return function (success) {
       return function () {
@@ -30,7 +30,7 @@ module.exports["getCursor'"] = function (window) {
     }
   }
 }
-module.exports["setCursor'"] = function (window) {
+exports["setCursor'"] = function (window) {
   return function (pos) {
     return function (error) {
       return function (success) {
@@ -47,7 +47,7 @@ module.exports["setCursor'"] = function (window) {
     }
   }
 }
-module.exports["getHeight'"] = function (window) {
+exports["getHeight'"] = function (window) {
   return function (error) {
     return function (success) {
       return function () {
@@ -62,7 +62,7 @@ module.exports["getHeight'"] = function (window) {
     }
   }
 }
-module.exports["setHeight'"] = function (window) {
+exports["setHeight'"] = function (window) {
   return function (height) {
     return function (error) {
       return function (success) {
@@ -79,7 +79,7 @@ module.exports["setHeight'"] = function (window) {
     }
   }
 }
-module.exports["getWidth'"] = function (window) {
+exports["getWidth'"] = function (window) {
   return function (error) {
     return function (success) {
       return function () {
@@ -94,7 +94,7 @@ module.exports["getWidth'"] = function (window) {
     }
   }
 }
-module.exports["setWidth'"] = function (window) {
+exports["setWidth'"] = function (window) {
   return function (width) {
     return function (error) {
       return function (success) {
@@ -111,7 +111,7 @@ module.exports["setWidth'"] = function (window) {
     }
   }
 }
-module.exports["getVar'"] = function (window) {
+exports["getVar'"] = function (window) {
   return function (name) {
     return function (error) {
       return function (success) {
@@ -128,7 +128,7 @@ module.exports["getVar'"] = function (window) {
     }
   }
 }
-module.exports["setVar'"] = function (window) {
+exports["setVar'"] = function (window) {
   return function (name) {
     return function (value) {
       return function (error) {
@@ -147,7 +147,7 @@ module.exports["setVar'"] = function (window) {
     }
   }
 }
-module.exports["delVar'"] = function (window) {
+exports["delVar'"] = function (window) {
   return function (name) {
     return function (error) {
       return function (success) {
@@ -164,7 +164,7 @@ module.exports["delVar'"] = function (window) {
     }
   }
 }
-module.exports["getOption'"] = function (window) {
+exports["getOption'"] = function (window) {
   return function (name) {
     return function (error) {
       return function (success) {
@@ -181,7 +181,7 @@ module.exports["getOption'"] = function (window) {
     }
   }
 }
-module.exports["setOption'"] = function (window) {
+exports["setOption'"] = function (window) {
   return function (name) {
     return function (value) {
       return function (error) {
@@ -200,7 +200,7 @@ module.exports["setOption'"] = function (window) {
     }
   }
 }
-module.exports["getPosition'"] = function (window) {
+exports["getPosition'"] = function (window) {
   return function (error) {
     return function (success) {
       return function () {
@@ -215,7 +215,7 @@ module.exports["getPosition'"] = function (window) {
     }
   }
 }
-module.exports["getTabpage'"] = function (window) {
+exports["getTabpage'"] = function (window) {
   return function (error) {
     return function (success) {
       return function () {
@@ -230,7 +230,7 @@ module.exports["getTabpage'"] = function (window) {
     }
   }
 }
-module.exports["isValid'"] = function (window) {
+exports["isValid'"] = function (window) {
   return function (error) {
     return function (success) {
       return function () {

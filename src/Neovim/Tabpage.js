@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports["getWindows'"] = function (tabpage) {
+exports["getWindows'"] = function (tabpage) {
   return function (error) {
     return function (success) {
       return function () {
@@ -15,7 +15,7 @@ module.exports["getWindows'"] = function (tabpage) {
     }
   }
 }
-module.exports["getVar'"] = function (tabpage) {
+exports["getVar'"] = function (tabpage) {
   return function (name) {
     return function (error) {
       return function (success) {
@@ -32,7 +32,7 @@ module.exports["getVar'"] = function (tabpage) {
     }
   }
 }
-module.exports["setVar'"] = function (tabpage) {
+exports["setVar'"] = function (tabpage) {
   return function (name) {
     return function (value) {
       return function (error) {
@@ -51,7 +51,7 @@ module.exports["setVar'"] = function (tabpage) {
     }
   }
 }
-module.exports["delVar'"] = function (tabpage) {
+exports["delVar'"] = function (tabpage) {
   return function (name) {
     return function (error) {
       return function (success) {
@@ -68,7 +68,7 @@ module.exports["delVar'"] = function (tabpage) {
     }
   }
 }
-module.exports["getWindow'"] = function (tabpage) {
+exports["getWindow'"] = function (tabpage) {
   return function (error) {
     return function (success) {
       return function () {
@@ -83,7 +83,7 @@ module.exports["getWindow'"] = function (tabpage) {
     }
   }
 }
-module.exports["isValid'"] = function (tabpage) {
+exports["isValid'"] = function (tabpage) {
   return function (error) {
     return function (success) {
       return function () {

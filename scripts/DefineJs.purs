@@ -28,7 +28,7 @@ mkFunc level args body = maybe "" recurse (uncons args)
   where recurse { head: a, tail: rst } = open level a <> (mkFunc (level + 1) rst body) <> close level
 
 defFunc :: String -> (Array String) -> (Int -> String) -> String
-defFunc name args body = "module.exports[\"" <> name <> "'\"] = " <> mkFunc 0 args body
+defFunc name args body = "exports[\"" <> name <> "'\"] = " <> mkFunc 0 args body
 
 asyncFuncForm objName fname args a b = [ asyncFuncCall objName fname args <> "function (err, result) {"
                     , "  if (err) {"

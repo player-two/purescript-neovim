@@ -1,62 +1,30 @@
 'use strict';
 
-module.exports["command'"] = function (str) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        str.command(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["feedkeys'"] = function (keys) {
-  return function (mode) {
-    return function (escape_csi) {
-      return function (error) {
-        return function (success) {
-          return function () {
-            keys.feedkeys(mode, escape_csi, function (err, result) {
-              if (err) {
-                error(err);
-              } else {
-                success(result);
-              }
-            });
-          }
+exports["command'"] = function (vim) {
+  return function (str) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.command(str, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
         }
       }
     }
   }
 }
-module.exports["input'"] = function (keys) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        keys.input(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["replaceTermcodes'"] = function (str) {
-  return function (from_part) {
-    return function (do_lt) {
-      return function (special) {
+exports["feedkeys'"] = function (vim) {
+  return function (keys) {
+    return function (mode) {
+      return function (escape_csi) {
         return function (error) {
           return function (success) {
             return function () {
-              str.replaceTermcodes(from_part, do_lt, special, function (err, result) {
+              vim.feedkeys(keys, mode, escape_csi, function (err, result) {
                 if (err) {
                   error(err);
                 } else {
@@ -70,42 +38,12 @@ module.exports["replaceTermcodes'"] = function (str) {
     }
   }
 }
-module.exports["commandOutput'"] = function (str) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        str.commandOutput(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["eval'"] = function (str) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        str.eval(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["callFunction'"] = function (fname) {
-  return function (args) {
+exports["input'"] = function (vim) {
+  return function (keys) {
     return function (error) {
       return function (success) {
         return function () {
-          fname.callFunction(args, function (err, result) {
+          vim.input(keys, function (err, result) {
             if (err) {
               error(err);
             } else {
@@ -117,111 +55,35 @@ module.exports["callFunction'"] = function (fname) {
     }
   }
 }
-module.exports["strwidth'"] = function (str) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        str.strwidth(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
+exports["replaceTermcodes'"] = function (vim) {
+  return function (str) {
+    return function (from_part) {
+      return function (do_lt) {
+        return function (special) {
+          return function (error) {
+            return function (success) {
+              return function () {
+                vim.replaceTermcodes(str, from_part, do_lt, special, function (err, result) {
+                  if (err) {
+                    error(err);
+                  } else {
+                    success(result);
+                  }
+                });
+              }
+            }
           }
-        });
-      }
-    }
-  }
-}
-module.exports["listRuntimePaths'"] = function (error) {
-  return function (success) {
-    return function () {
-      .listRuntimePaths(function (err, result) {
-        if (err) {
-          error(err);
-        } else {
-          success(result);
         }
-      });
-    }
-  }
-}
-module.exports["changeDirectory'"] = function (dir) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        dir.changeDirectory(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
       }
     }
   }
 }
-module.exports["getCurrentLine'"] = function (error) {
-  return function (success) {
-    return function () {
-      .getCurrentLine(function (err, result) {
-        if (err) {
-          error(err);
-        } else {
-          success(result);
-        }
-      });
-    }
-  }
-}
-module.exports["setCurrentLine'"] = function (line) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        line.setCurrentLine(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["delCurrentLine'"] = function (error) {
-  return function (success) {
-    return function () {
-      .delCurrentLine(function (err, result) {
-        if (err) {
-          error(err);
-        } else {
-          success(result);
-        }
-      });
-    }
-  }
-}
-module.exports["getVar'"] = function (name) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        name.getVar(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["setVar'"] = function (name) {
-  return function (value) {
+exports["commandOutput'"] = function (vim) {
+  return function (str) {
     return function (error) {
       return function (success) {
         return function () {
-          name.setVar(value, function (err, result) {
+          vim.commandOutput(str, function (err, result) {
             if (err) {
               error(err);
             } else {
@@ -233,57 +95,12 @@ module.exports["setVar'"] = function (name) {
     }
   }
 }
-module.exports["delVar'"] = function (name) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        name.delVar(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["getVvar'"] = function (name) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        name.getVvar(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["getOption'"] = function (name) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        name.getOption(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["setOption'"] = function (name) {
-  return function (value) {
+exports["eval'"] = function (vim) {
+  return function (str) {
     return function (error) {
       return function (success) {
         return function () {
-          name.setOption(value, function (err, result) {
+          vim.eval(str, function (err, result) {
             if (err) {
               error(err);
             } else {
@@ -295,82 +112,47 @@ module.exports["setOption'"] = function (name) {
     }
   }
 }
-module.exports["outWrite'"] = function (str) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        str.outWrite(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
+exports["callFunction'"] = function (vim) {
+  return function (fname) {
+    return function (args) {
+      return function (error) {
+        return function (success) {
+          return function () {
+            vim.callFunction(fname, args, function (err, result) {
+              if (err) {
+                error(err);
+              } else {
+                success(result);
+              }
+            });
           }
-        });
-      }
-    }
-  }
-}
-module.exports["errWrite'"] = function (str) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        str.errWrite(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["reportError'"] = function (str) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        str.reportError(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["getBuffers'"] = function (error) {
-  return function (success) {
-    return function () {
-      .getBuffers(function (err, result) {
-        if (err) {
-          error(err);
-        } else {
-          success(result);
         }
-      });
+      }
     }
   }
 }
-module.exports["getCurrentBuffer'"] = function (error) {
-  return function (success) {
-    return function () {
-      .getCurrentBuffer(function (err, result) {
-        if (err) {
-          error(err);
-        } else {
-          success(result);
+exports["strwidth'"] = function (vim) {
+  return function (str) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.strwidth(str, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
         }
-      });
+      }
     }
   }
 }
-module.exports["setCurrentBuffer'"] = function (buffer) {
+exports["listRuntimePaths'"] = function (vim) {
   return function (error) {
     return function (success) {
       return function () {
-        buffer.setCurrentBuffer(function (err, result) {
+        vim.listRuntimePaths(function (err, result) {
           if (err) {
             error(err);
           } else {
@@ -381,37 +163,28 @@ module.exports["setCurrentBuffer'"] = function (buffer) {
     }
   }
 }
-module.exports["getWindows'"] = function (error) {
-  return function (success) {
-    return function () {
-      .getWindows(function (err, result) {
-        if (err) {
-          error(err);
-        } else {
-          success(result);
+exports["changeDirectory'"] = function (vim) {
+  return function (dir) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.changeDirectory(dir, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
         }
-      });
+      }
     }
   }
 }
-module.exports["getCurrentWindow'"] = function (error) {
-  return function (success) {
-    return function () {
-      .getCurrentWindow(function (err, result) {
-        if (err) {
-          error(err);
-        } else {
-          success(result);
-        }
-      });
-    }
-  }
-}
-module.exports["setCurrentWindow'"] = function (window) {
+exports["getCurrentLine'"] = function (vim) {
   return function (error) {
     return function (success) {
       return function () {
-        window.setCurrentWindow(function (err, result) {
+        vim.getCurrentLine(function (err, result) {
           if (err) {
             error(err);
           } else {
@@ -422,37 +195,28 @@ module.exports["setCurrentWindow'"] = function (window) {
     }
   }
 }
-module.exports["getTabpages'"] = function (error) {
-  return function (success) {
-    return function () {
-      .getTabpages(function (err, result) {
-        if (err) {
-          error(err);
-        } else {
-          success(result);
+exports["setCurrentLine'"] = function (vim) {
+  return function (line) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.setCurrentLine(line, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
         }
-      });
+      }
     }
   }
 }
-module.exports["getCurrentTabpage'"] = function (error) {
-  return function (success) {
-    return function () {
-      .getCurrentTabpage(function (err, result) {
-        if (err) {
-          error(err);
-        } else {
-          success(result);
-        }
-      });
-    }
-  }
-}
-module.exports["setCurrentTabpage'"] = function (tabpage) {
+exports["delCurrentLine'"] = function (vim) {
   return function (error) {
     return function (success) {
       return function () {
-        tabpage.setCurrentTabpage(function (err, result) {
+        vim.delCurrentLine(function (err, result) {
           if (err) {
             error(err);
           } else {
@@ -463,74 +227,382 @@ module.exports["setCurrentTabpage'"] = function (tabpage) {
     }
   }
 }
-module.exports["subscribe'"] = function (event) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        event.subscribe(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["unsubscribe'"] = function (event) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        event.unsubscribe(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["nameToColor'"] = function (name) {
-  return function (error) {
-    return function (success) {
-      return function () {
-        name.nameToColor(function (err, result) {
-          if (err) {
-            error(err);
-          } else {
-            success(result);
-          }
-        });
-      }
-    }
-  }
-}
-module.exports["getColorMap'"] = function (error) {
-  return function (success) {
-    return function () {
-      .getColorMap(function (err, result) {
-        if (err) {
-          error(err);
-        } else {
-          success(result);
+exports["getVar'"] = function (vim) {
+  return function (name) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.getVar(name, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
         }
-      });
+      }
     }
   }
 }
-module.exports["getApiInfo'"] = function (error) {
-  return function (success) {
-    return function () {
-      .getApiInfo(function (err, result) {
-        if (err) {
-          error(err);
-        } else {
-          success(result);
+exports["setVar'"] = function (vim) {
+  return function (name) {
+    return function (value) {
+      return function (error) {
+        return function (success) {
+          return function () {
+            vim.setVar(name, value, function (err, result) {
+              if (err) {
+                error(err);
+              } else {
+                success(result);
+              }
+            });
+          }
         }
-      });
+      }
+    }
+  }
+}
+exports["delVar'"] = function (vim) {
+  return function (name) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.delVar(name, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
+        }
+      }
+    }
+  }
+}
+exports["getVvar'"] = function (vim) {
+  return function (name) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.getVvar(name, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
+        }
+      }
+    }
+  }
+}
+exports["getOption'"] = function (vim) {
+  return function (name) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.getOption(name, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
+        }
+      }
+    }
+  }
+}
+exports["setOption'"] = function (vim) {
+  return function (name) {
+    return function (value) {
+      return function (error) {
+        return function (success) {
+          return function () {
+            vim.setOption(name, value, function (err, result) {
+              if (err) {
+                error(err);
+              } else {
+                success(result);
+              }
+            });
+          }
+        }
+      }
+    }
+  }
+}
+exports["outWrite'"] = function (vim) {
+  return function (str) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.outWrite(str, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
+        }
+      }
+    }
+  }
+}
+exports["errWrite'"] = function (vim) {
+  return function (str) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.errWrite(str, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
+        }
+      }
+    }
+  }
+}
+exports["reportError'"] = function (vim) {
+  return function (str) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.reportError(str, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
+        }
+      }
+    }
+  }
+}
+exports["getBuffers'"] = function (vim) {
+  return function (error) {
+    return function (success) {
+      return function () {
+        vim.getBuffers(function (err, result) {
+          if (err) {
+            error(err);
+          } else {
+            success(result);
+          }
+        });
+      }
+    }
+  }
+}
+exports["getCurrentBuffer'"] = function (vim) {
+  return function (error) {
+    return function (success) {
+      return function () {
+        vim.getCurrentBuffer(function (err, result) {
+          if (err) {
+            error(err);
+          } else {
+            success(result);
+          }
+        });
+      }
+    }
+  }
+}
+exports["setCurrentBuffer'"] = function (vim) {
+  return function (buffer) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.setCurrentBuffer(buffer, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
+        }
+      }
+    }
+  }
+}
+exports["getWindows'"] = function (vim) {
+  return function (error) {
+    return function (success) {
+      return function () {
+        vim.getWindows(function (err, result) {
+          if (err) {
+            error(err);
+          } else {
+            success(result);
+          }
+        });
+      }
+    }
+  }
+}
+exports["getCurrentWindow'"] = function (vim) {
+  return function (error) {
+    return function (success) {
+      return function () {
+        vim.getCurrentWindow(function (err, result) {
+          if (err) {
+            error(err);
+          } else {
+            success(result);
+          }
+        });
+      }
+    }
+  }
+}
+exports["setCurrentWindow'"] = function (vim) {
+  return function (window) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.setCurrentWindow(window, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
+        }
+      }
+    }
+  }
+}
+exports["getTabpages'"] = function (vim) {
+  return function (error) {
+    return function (success) {
+      return function () {
+        vim.getTabpages(function (err, result) {
+          if (err) {
+            error(err);
+          } else {
+            success(result);
+          }
+        });
+      }
+    }
+  }
+}
+exports["getCurrentTabpage'"] = function (vim) {
+  return function (error) {
+    return function (success) {
+      return function () {
+        vim.getCurrentTabpage(function (err, result) {
+          if (err) {
+            error(err);
+          } else {
+            success(result);
+          }
+        });
+      }
+    }
+  }
+}
+exports["setCurrentTabpage'"] = function (vim) {
+  return function (tabpage) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.setCurrentTabpage(tabpage, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
+        }
+      }
+    }
+  }
+}
+exports["subscribe'"] = function (vim) {
+  return function (event) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.subscribe(event, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
+        }
+      }
+    }
+  }
+}
+exports["unsubscribe'"] = function (vim) {
+  return function (event) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.unsubscribe(event, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
+        }
+      }
+    }
+  }
+}
+exports["nameToColor'"] = function (vim) {
+  return function (name) {
+    return function (error) {
+      return function (success) {
+        return function () {
+          vim.nameToColor(name, function (err, result) {
+            if (err) {
+              error(err);
+            } else {
+              success(result);
+            }
+          });
+        }
+      }
+    }
+  }
+}
+exports["getColorMap'"] = function (vim) {
+  return function (error) {
+    return function (success) {
+      return function () {
+        vim.getColorMap(function (err, result) {
+          if (err) {
+            error(err);
+          } else {
+            success(result);
+          }
+        });
+      }
+    }
+  }
+}
+exports["getApiInfo'"] = function (vim) {
+  return function (error) {
+    return function (success) {
+      return function () {
+        vim.getApiInfo(function (err, result) {
+          if (err) {
+            error(err);
+          } else {
+            success(result);
+          }
+        });
+      }
     }
   }
 }

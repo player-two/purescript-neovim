@@ -11,219 +11,219 @@ import Neovim.Plugin (PLUGIN)
 import Neovim.Types
 
 
-foreign import command' :: forall e. String -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import command' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-command :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-command str = makeAff $ command' str
+command :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Unit
+command vim str = makeAff $ command' vim str
 
 
-foreign import feedkeys' :: forall e. String -> String -> Boolean -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import feedkeys' :: forall e1 e2. Vim -> String -> String -> Boolean -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-feedkeys :: forall a. String -> String -> Boolean -> Aff (plugin :: PLUGIN | a) Unit
-feedkeys keys mode escape_csi = makeAff $ feedkeys' keys mode escape_csi
+feedkeys :: forall a. Vim -> String -> String -> Boolean -> Aff (plugin :: PLUGIN | a) Unit
+feedkeys vim keys mode escape_csi = makeAff $ feedkeys' vim keys mode escape_csi
 
 
-foreign import input' :: forall e. String -> (Error -> Eff e Unit) -> (Int -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import input' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Int -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-input :: forall a. String -> Aff (plugin :: PLUGIN | a) Int
-input keys = makeAff $ input' keys
+input :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Int
+input vim keys = makeAff $ input' vim keys
 
 
-foreign import replaceTermcodes' :: forall e. String -> Boolean -> Boolean -> Boolean -> (Error -> Eff e Unit) -> (String -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import replaceTermcodes' :: forall e1 e2. Vim -> String -> Boolean -> Boolean -> Boolean -> (Error -> Eff e1 Unit) -> (String -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-replaceTermcodes :: forall a. String -> Boolean -> Boolean -> Boolean -> Aff (plugin :: PLUGIN | a) String
-replaceTermcodes str from_part do_lt special = makeAff $ replaceTermcodes' str from_part do_lt special
+replaceTermcodes :: forall a. Vim -> String -> Boolean -> Boolean -> Boolean -> Aff (plugin :: PLUGIN | a) String
+replaceTermcodes vim str from_part do_lt special = makeAff $ replaceTermcodes' vim str from_part do_lt special
 
 
-foreign import commandOutput' :: forall e. String -> (Error -> Eff e Unit) -> (String -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import commandOutput' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (String -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-commandOutput :: forall a. String -> Aff (plugin :: PLUGIN | a) String
-commandOutput str = makeAff $ commandOutput' str
+commandOutput :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) String
+commandOutput vim str = makeAff $ commandOutput' vim str
 
 
-foreign import eval' :: forall e. String -> (Error -> Eff e Unit) -> (Foreign -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import eval' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-eval :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
-eval str = makeAff $ eval' str
+eval :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Foreign
+eval vim str = makeAff $ eval' vim str
 
 
-foreign import callFunction' :: forall e. String -> Array -> (Error -> Eff e Unit) -> (Foreign -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import callFunction' :: forall e1 e2. Vim -> String -> (Array Foreign) -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-callFunction :: forall a. String -> Array -> Aff (plugin :: PLUGIN | a) Foreign
-callFunction fname args = makeAff $ callFunction' fname args
+callFunction :: forall a. Vim -> String -> (Array Foreign) -> Aff (plugin :: PLUGIN | a) Foreign
+callFunction vim fname args = makeAff $ callFunction' vim fname args
 
 
-foreign import strwidth' :: forall e. String -> (Error -> Eff e Unit) -> (Int -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import strwidth' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Int -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-strwidth :: forall a. String -> Aff (plugin :: PLUGIN | a) Int
-strwidth str = makeAff $ strwidth' str
+strwidth :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Int
+strwidth vim str = makeAff $ strwidth' vim str
 
 
-foreign import listRuntimePaths' :: forall e. (Error -> Eff e Unit) -> ((Array String) -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import listRuntimePaths' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> ((Array String) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-listRuntimePaths :: forall a. Aff (plugin :: PLUGIN | a) (Array String)
-listRuntimePaths  = makeAff $ listRuntimePaths' 
+listRuntimePaths :: forall a. Vim -> Aff (plugin :: PLUGIN | a) (Array String)
+listRuntimePaths vim = makeAff $ listRuntimePaths' vim
 
 
-foreign import changeDirectory' :: forall e. String -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import changeDirectory' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-changeDirectory :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-changeDirectory dir = makeAff $ changeDirectory' dir
+changeDirectory :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Unit
+changeDirectory vim dir = makeAff $ changeDirectory' vim dir
 
 
-foreign import getCurrentLine' :: forall e. (Error -> Eff e Unit) -> (String -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import getCurrentLine' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> (String -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-getCurrentLine :: forall a. Aff (plugin :: PLUGIN | a) String
-getCurrentLine  = makeAff $ getCurrentLine' 
+getCurrentLine :: forall a. Vim -> Aff (plugin :: PLUGIN | a) String
+getCurrentLine vim = makeAff $ getCurrentLine' vim
 
 
-foreign import setCurrentLine' :: forall e. String -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import setCurrentLine' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-setCurrentLine :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-setCurrentLine line = makeAff $ setCurrentLine' line
+setCurrentLine :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentLine vim line = makeAff $ setCurrentLine' vim line
 
 
-foreign import delCurrentLine' :: forall e. (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import delCurrentLine' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-delCurrentLine :: forall a. Aff (plugin :: PLUGIN | a) Unit
-delCurrentLine  = makeAff $ delCurrentLine' 
+delCurrentLine :: forall a. Vim -> Aff (plugin :: PLUGIN | a) Unit
+delCurrentLine vim = makeAff $ delCurrentLine' vim
 
 
-foreign import getVar' :: forall e. String -> (Error -> Eff e Unit) -> (Foreign -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import getVar' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-getVar :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
-getVar name = makeAff $ getVar' name
+getVar :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Foreign
+getVar vim name = makeAff $ getVar' vim name
 
 
-foreign import setVar' :: forall e. String -> Foreign -> (Error -> Eff e Unit) -> (Foreign -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import setVar' :: forall e1 e2. Vim -> String -> Foreign -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-setVar :: forall a. String -> Foreign -> Aff (plugin :: PLUGIN | a) Foreign
-setVar name value = makeAff $ setVar' name value
+setVar :: forall a. Vim -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Foreign
+setVar vim name value = makeAff $ setVar' vim name value
 
 
-foreign import delVar' :: forall e. String -> (Error -> Eff e Unit) -> (Foreign -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import delVar' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-delVar :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
-delVar name = makeAff $ delVar' name
+delVar :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Foreign
+delVar vim name = makeAff $ delVar' vim name
 
 
-foreign import getVvar' :: forall e. String -> (Error -> Eff e Unit) -> (Foreign -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import getVvar' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-getVvar :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
-getVvar name = makeAff $ getVvar' name
+getVvar :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Foreign
+getVvar vim name = makeAff $ getVvar' vim name
 
 
-foreign import getOption' :: forall e. String -> (Error -> Eff e Unit) -> (Foreign -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import getOption' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-getOption :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
-getOption name = makeAff $ getOption' name
+getOption :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Foreign
+getOption vim name = makeAff $ getOption' vim name
 
 
-foreign import setOption' :: forall e. String -> Foreign -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import setOption' :: forall e1 e2. Vim -> String -> Foreign -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-setOption :: forall a. String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
-setOption name value = makeAff $ setOption' name value
+setOption :: forall a. Vim -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
+setOption vim name value = makeAff $ setOption' vim name value
 
 
-foreign import outWrite' :: forall e. String -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import outWrite' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-outWrite :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-outWrite str = makeAff $ outWrite' str
+outWrite :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Unit
+outWrite vim str = makeAff $ outWrite' vim str
 
 
-foreign import errWrite' :: forall e. String -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import errWrite' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-errWrite :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-errWrite str = makeAff $ errWrite' str
+errWrite :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Unit
+errWrite vim str = makeAff $ errWrite' vim str
 
 
-foreign import reportError' :: forall e. String -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import reportError' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-reportError :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-reportError str = makeAff $ reportError' str
+reportError :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Unit
+reportError vim str = makeAff $ reportError' vim str
 
 
-foreign import getBuffers' :: forall e. (Error -> Eff e Unit) -> ((Array Buffer) -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import getBuffers' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> ((Array Buffer) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-getBuffers :: forall a. Aff (plugin :: PLUGIN | a) (Array Buffer)
-getBuffers  = makeAff $ getBuffers' 
+getBuffers :: forall a. Vim -> Aff (plugin :: PLUGIN | a) (Array Buffer)
+getBuffers vim = makeAff $ getBuffers' vim
 
 
-foreign import getCurrentBuffer' :: forall e. (Error -> Eff e Unit) -> (Buffer -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import getCurrentBuffer' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> (Buffer -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-getCurrentBuffer :: forall a. Aff (plugin :: PLUGIN | a) Buffer
-getCurrentBuffer  = makeAff $ getCurrentBuffer' 
+getCurrentBuffer :: forall a. Vim -> Aff (plugin :: PLUGIN | a) Buffer
+getCurrentBuffer vim = makeAff $ getCurrentBuffer' vim
 
 
-foreign import setCurrentBuffer' :: forall e. Buffer -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import setCurrentBuffer' :: forall e1 e2. Vim -> Buffer -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-setCurrentBuffer :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Unit
-setCurrentBuffer buffer = makeAff $ setCurrentBuffer' buffer
+setCurrentBuffer :: forall a. Vim -> Buffer -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentBuffer vim buffer = makeAff $ setCurrentBuffer' vim buffer
 
 
-foreign import getWindows' :: forall e. (Error -> Eff e Unit) -> ((Array Window) -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import getWindows' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> ((Array Window) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-getWindows :: forall a. Aff (plugin :: PLUGIN | a) (Array Window)
-getWindows  = makeAff $ getWindows' 
+getWindows :: forall a. Vim -> Aff (plugin :: PLUGIN | a) (Array Window)
+getWindows vim = makeAff $ getWindows' vim
 
 
-foreign import getCurrentWindow' :: forall e. (Error -> Eff e Unit) -> (Window -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import getCurrentWindow' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> (Window -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-getCurrentWindow :: forall a. Aff (plugin :: PLUGIN | a) Window
-getCurrentWindow  = makeAff $ getCurrentWindow' 
+getCurrentWindow :: forall a. Vim -> Aff (plugin :: PLUGIN | a) Window
+getCurrentWindow vim = makeAff $ getCurrentWindow' vim
 
 
-foreign import setCurrentWindow' :: forall e. Window -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import setCurrentWindow' :: forall e1 e2. Vim -> Window -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-setCurrentWindow :: forall a. Window -> Aff (plugin :: PLUGIN | a) Unit
-setCurrentWindow window = makeAff $ setCurrentWindow' window
+setCurrentWindow :: forall a. Vim -> Window -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentWindow vim window = makeAff $ setCurrentWindow' vim window
 
 
-foreign import getTabpages' :: forall e. (Error -> Eff e Unit) -> ((Array Tabpage) -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import getTabpages' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> ((Array Tabpage) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-getTabpages :: forall a. Aff (plugin :: PLUGIN | a) (Array Tabpage)
-getTabpages  = makeAff $ getTabpages' 
+getTabpages :: forall a. Vim -> Aff (plugin :: PLUGIN | a) (Array Tabpage)
+getTabpages vim = makeAff $ getTabpages' vim
 
 
-foreign import getCurrentTabpage' :: forall e. (Error -> Eff e Unit) -> (Tabpage -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import getCurrentTabpage' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> (Tabpage -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-getCurrentTabpage :: forall a. Aff (plugin :: PLUGIN | a) Tabpage
-getCurrentTabpage  = makeAff $ getCurrentTabpage' 
+getCurrentTabpage :: forall a. Vim -> Aff (plugin :: PLUGIN | a) Tabpage
+getCurrentTabpage vim = makeAff $ getCurrentTabpage' vim
 
 
-foreign import setCurrentTabpage' :: forall e. Tabpage -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import setCurrentTabpage' :: forall e1 e2. Vim -> Tabpage -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-setCurrentTabpage :: forall a. Tabpage -> Aff (plugin :: PLUGIN | a) Unit
-setCurrentTabpage tabpage = makeAff $ setCurrentTabpage' tabpage
+setCurrentTabpage :: forall a. Vim -> Tabpage -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentTabpage vim tabpage = makeAff $ setCurrentTabpage' vim tabpage
 
 
-foreign import subscribe' :: forall e. String -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import subscribe' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-subscribe :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-subscribe event = makeAff $ subscribe' event
+subscribe :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Unit
+subscribe vim event = makeAff $ subscribe' vim event
 
 
-foreign import unsubscribe' :: forall e. String -> (Error -> Eff e Unit) -> (Unit -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import unsubscribe' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-unsubscribe :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-unsubscribe event = makeAff $ unsubscribe' event
+unsubscribe :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Unit
+unsubscribe vim event = makeAff $ unsubscribe' vim event
 
 
-foreign import nameToColor' :: forall e. String -> (Error -> Eff e Unit) -> (Int -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import nameToColor' :: forall e1 e2. Vim -> String -> (Error -> Eff e1 Unit) -> (Int -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-nameToColor :: forall a. String -> Aff (plugin :: PLUGIN | a) Int
-nameToColor name = makeAff $ nameToColor' name
+nameToColor :: forall a. Vim -> String -> Aff (plugin :: PLUGIN | a) Int
+nameToColor vim name = makeAff $ nameToColor' vim name
 
 
-foreign import getColorMap' :: forall e. (Error -> Eff e Unit) -> (StrMap String -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import getColorMap' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> ((StrMap String) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-getColorMap :: forall a. Aff (plugin :: PLUGIN | a) StrMap String
-getColorMap  = makeAff $ getColorMap' 
+getColorMap :: forall a. Vim -> Aff (plugin :: PLUGIN | a) (StrMap String)
+getColorMap vim = makeAff $ getColorMap' vim
 
 
-foreign import getApiInfo' :: forall e. (Error -> Eff e Unit) -> (Array -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit
+foreign import getApiInfo' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> ((Array Foreign) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
-getApiInfo :: forall a. Aff (plugin :: PLUGIN | a) Array
-getApiInfo  = makeAff $ getApiInfo' 
+getApiInfo :: forall a. Vim -> Aff (plugin :: PLUGIN | a) (Array Foreign)
+getApiInfo vim = makeAff $ getApiInfo' vim
 
 

@@ -4,7 +4,7 @@ import Prelude
 import Control.Monad.Eff (Eff())
 import Control.Monad.Eff.Console (log, CONSOLE)
 import Control.Monad.Eff.Exception (EXCEPTION)
-import Data.Array (drop, snoc, uncons)
+import Data.Array (cons, drop, snoc, uncons)
 import Data.Either (either, Either(Left, Right))
 import Data.Foldable (foldl, sequence_)
 import Data.Foreign (unsafeFromForeign)
@@ -119,9 +119,10 @@ match' (Left _) = \_ -> Nothing
 match' (Right re) = match re
 
 mapType :: String -> String
-mapType "Dictionary" = "StrMap String"
+mapType "Dictionary" = "(StrMap String)"
 mapType "Object" = "Foreign"
 mapType "Integer" = "Int"
+mapType "Array" = "(Array Foreign)"
 mapType "void" = "Unit"
 mapType t
   | test' arrayOfRegex t = case match' arrayOfRegex t of
@@ -140,17 +141,21 @@ mapType t
     where wrap subT = "(Array " <> subT <> ")"
   | otherwise = t
 
+parameters f = if subname == "ui" || subname == "vi" then cons ["Vim", "vim"] f.parameters else f.parameters
+  where subname = Str.take 2 f.name
+
 defFunc :: Func -> String
-defFunc (Func f) = "foreign import " <> name <> "' :: forall e. " <> args <> "(Error -> Eff e Unit) -> (" <> ret <>  " -> Eff e Unit) -> Eff (plugin :: PLUGIN | e) Unit" <> "\n\n"
+defFunc (Func f) = "foreign import " <> name <> "' :: forall e1 e2. " <> args <> "(Error -> Eff e1 Unit) -> (" <> ret <>  " -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit" <> "\n\n"
   <> name <> " :: forall a. " <> args <> "Aff (plugin :: PLUGIN | a) " <> ret <> "\n"
   <> name <> " " <> argNames <> " = makeAff $ " <> name <> "' " <> argNames <> "\n\n\n"
     where name = fnName f.name
-          args = fnArgs f.parameters
-          argNames = fnArgNames f.parameters
+          params = parameters f
+          args = fnArgs params
+          argNames = fnArgNames params
           ret = mapType f.returnType
 
 defForeignFunc :: Func -> String
-defForeignFunc (Func f) = DefineJs.defAsyncFunc (fnName f.name) (map argName f.parameters)
+defForeignFunc (Func f) = DefineJs.defAsyncFunc (fnName f.name) (map argName (parameters f))
   where argName [_, n] = n
         argName _ = ""
 
