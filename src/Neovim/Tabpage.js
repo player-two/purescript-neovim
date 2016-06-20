@@ -6,9 +6,9 @@ exports["getWindows'"] = function (tabpage) {
       return function () {
         tabpage.getWindows(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -22,9 +22,9 @@ exports["getVar'"] = function (tabpage) {
         return function () {
           tabpage.getVar(name, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -40,9 +40,9 @@ exports["setVar'"] = function (tabpage) {
           return function () {
             tabpage.setVar(name, value, function (err, result) {
               if (err) {
-                error(err);
+                error(err)();
               } else {
-                success(result);
+                success(result)();
               }
             });
           }
@@ -58,9 +58,9 @@ exports["delVar'"] = function (tabpage) {
         return function () {
           tabpage.delVar(name, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -74,9 +74,9 @@ exports["getWindow'"] = function (tabpage) {
       return function () {
         tabpage.getWindow(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -89,9 +89,9 @@ exports["isValid'"] = function (tabpage) {
       return function () {
         tabpage.isValid(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }

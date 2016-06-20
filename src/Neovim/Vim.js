@@ -7,9 +7,9 @@ exports["command'"] = function (vim) {
         return function () {
           vim.command(str, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -26,9 +26,9 @@ exports["feedkeys'"] = function (vim) {
             return function () {
               vim.feedkeys(keys, mode, escape_csi, function (err, result) {
                 if (err) {
-                  error(err);
+                  error(err)();
                 } else {
-                  success(result);
+                  success(result)();
                 }
               });
             }
@@ -45,9 +45,9 @@ exports["input'"] = function (vim) {
         return function () {
           vim.input(keys, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -65,9 +65,9 @@ exports["replaceTermcodes'"] = function (vim) {
               return function () {
                 vim.replaceTermcodes(str, from_part, do_lt, special, function (err, result) {
                   if (err) {
-                    error(err);
+                    error(err)();
                   } else {
-                    success(result);
+                    success(result)();
                   }
                 });
               }
@@ -85,9 +85,9 @@ exports["commandOutput'"] = function (vim) {
         return function () {
           vim.commandOutput(str, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -102,9 +102,9 @@ exports["eval'"] = function (vim) {
         return function () {
           vim.eval(str, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -120,9 +120,9 @@ exports["callFunction'"] = function (vim) {
           return function () {
             vim.callFunction(fname, args, function (err, result) {
               if (err) {
-                error(err);
+                error(err)();
               } else {
-                success(result);
+                success(result)();
               }
             });
           }
@@ -138,9 +138,9 @@ exports["strwidth'"] = function (vim) {
         return function () {
           vim.strwidth(str, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -154,9 +154,9 @@ exports["listRuntimePaths'"] = function (vim) {
       return function () {
         vim.listRuntimePaths(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -170,9 +170,9 @@ exports["changeDirectory'"] = function (vim) {
         return function () {
           vim.changeDirectory(dir, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -186,9 +186,9 @@ exports["getCurrentLine'"] = function (vim) {
       return function () {
         vim.getCurrentLine(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -202,9 +202,9 @@ exports["setCurrentLine'"] = function (vim) {
         return function () {
           vim.setCurrentLine(line, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -218,9 +218,9 @@ exports["delCurrentLine'"] = function (vim) {
       return function () {
         vim.delCurrentLine(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -234,9 +234,9 @@ exports["getVar'"] = function (vim) {
         return function () {
           vim.getVar(name, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -252,9 +252,9 @@ exports["setVar'"] = function (vim) {
           return function () {
             vim.setVar(name, value, function (err, result) {
               if (err) {
-                error(err);
+                error(err)();
               } else {
-                success(result);
+                success(result)();
               }
             });
           }
@@ -270,9 +270,9 @@ exports["delVar'"] = function (vim) {
         return function () {
           vim.delVar(name, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -287,9 +287,9 @@ exports["getVvar'"] = function (vim) {
         return function () {
           vim.getVvar(name, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -304,9 +304,9 @@ exports["getOption'"] = function (vim) {
         return function () {
           vim.getOption(name, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -322,9 +322,9 @@ exports["setOption'"] = function (vim) {
           return function () {
             vim.setOption(name, value, function (err, result) {
               if (err) {
-                error(err);
+                error(err)();
               } else {
-                success(result);
+                success(result)();
               }
             });
           }
@@ -340,9 +340,9 @@ exports["outWrite'"] = function (vim) {
         return function () {
           vim.outWrite(str, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -357,9 +357,9 @@ exports["errWrite'"] = function (vim) {
         return function () {
           vim.errWrite(str, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -374,9 +374,9 @@ exports["reportError'"] = function (vim) {
         return function () {
           vim.reportError(str, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -390,9 +390,9 @@ exports["getBuffers'"] = function (vim) {
       return function () {
         vim.getBuffers(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -405,9 +405,9 @@ exports["getCurrentBuffer'"] = function (vim) {
       return function () {
         vim.getCurrentBuffer(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -421,9 +421,9 @@ exports["setCurrentBuffer'"] = function (vim) {
         return function () {
           vim.setCurrentBuffer(buffer, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -437,9 +437,9 @@ exports["getWindows'"] = function (vim) {
       return function () {
         vim.getWindows(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -452,9 +452,9 @@ exports["getCurrentWindow'"] = function (vim) {
       return function () {
         vim.getCurrentWindow(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -468,9 +468,9 @@ exports["setCurrentWindow'"] = function (vim) {
         return function () {
           vim.setCurrentWindow(window, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -484,9 +484,9 @@ exports["getTabpages'"] = function (vim) {
       return function () {
         vim.getTabpages(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -499,9 +499,9 @@ exports["getCurrentTabpage'"] = function (vim) {
       return function () {
         vim.getCurrentTabpage(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -515,9 +515,9 @@ exports["setCurrentTabpage'"] = function (vim) {
         return function () {
           vim.setCurrentTabpage(tabpage, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -532,9 +532,9 @@ exports["subscribe'"] = function (vim) {
         return function () {
           vim.subscribe(event, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -549,9 +549,9 @@ exports["unsubscribe'"] = function (vim) {
         return function () {
           vim.unsubscribe(event, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -566,9 +566,9 @@ exports["nameToColor'"] = function (vim) {
         return function () {
           vim.nameToColor(name, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -582,9 +582,9 @@ exports["getColorMap'"] = function (vim) {
       return function () {
         vim.getColorMap(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -597,9 +597,9 @@ exports["getApiInfo'"] = function (vim) {
       return function () {
         vim.getApiInfo(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }

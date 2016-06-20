@@ -9,9 +9,9 @@ exports["attach'"] = function (vim) {
             return function () {
               vim.attach(width, height, enable_rgb, function (err, result) {
                 if (err) {
-                  error(err);
+                  error(err)();
                 } else {
-                  success(result);
+                  success(result)();
                 }
               });
             }
@@ -27,9 +27,9 @@ exports["detach'"] = function (vim) {
       return function () {
         vim.detach(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -44,9 +44,9 @@ exports["tryResize'"] = function (vim) {
           return function () {
             vim.tryResize(width, height, function (err, result) {
               if (err) {
-                error(err);
+                error(err)();
               } else {
-                success(result);
+                success(result)();
               }
             });
           }

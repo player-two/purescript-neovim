@@ -32,9 +32,9 @@ defFunc name args body = "exports[\"" <> name <> "'\"] = " <> mkFunc 0 args body
 
 asyncFuncForm objName fname args a b = [ asyncFuncCall objName fname args <> "function (err, result) {"
                     , "  if (err) {"
-                    , "    " <> a <> "(err);"
+                    , "    " <> a <> "(err)();"
                     , "  } else {"
-                    , "    " <> b <> "(result);"
+                    , "    " <> b <> "(result)();"
                     , "  }"
                     , "});"
                     ]

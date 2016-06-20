@@ -6,9 +6,9 @@ exports["lineCount'"] = function (buffer) {
       return function () {
         buffer.lineCount(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -22,9 +22,9 @@ exports["getLine'"] = function (buffer) {
         return function () {
           buffer.getLine(index, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -40,9 +40,9 @@ exports["setLine'"] = function (buffer) {
           return function () {
             buffer.setLine(index, line, function (err, result) {
               if (err) {
-                error(err);
+                error(err)();
               } else {
-                success(result);
+                success(result)();
               }
             });
           }
@@ -58,9 +58,9 @@ exports["delLine'"] = function (buffer) {
         return function () {
           buffer.delLine(index, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -78,9 +78,9 @@ exports["getLineSlice'"] = function (buffer) {
               return function () {
                 buffer.getLineSlice(start, end, include_start, include_end, function (err, result) {
                   if (err) {
-                    error(err);
+                    error(err)();
                   } else {
-                    success(result);
+                    success(result)();
                   }
                 });
               }
@@ -100,9 +100,9 @@ exports["getLines'"] = function (buffer) {
             return function () {
               buffer.getLines(start, end, strict_indexing, function (err, result) {
                 if (err) {
-                  error(err);
+                  error(err)();
                 } else {
-                  success(result);
+                  success(result)();
                 }
               });
             }
@@ -123,9 +123,9 @@ exports["setLineSlice'"] = function (buffer) {
                 return function () {
                   buffer.setLineSlice(start, end, include_start, include_end, replacement, function (err, result) {
                     if (err) {
-                      error(err);
+                      error(err)();
                     } else {
-                      success(result);
+                      success(result)();
                     }
                   });
                 }
@@ -147,9 +147,9 @@ exports["setLines'"] = function (buffer) {
               return function () {
                 buffer.setLines(start, end, strict_indexing, replacement, function (err, result) {
                   if (err) {
-                    error(err);
+                    error(err)();
                   } else {
-                    success(result);
+                    success(result)();
                   }
                 });
               }
@@ -167,9 +167,9 @@ exports["getVar'"] = function (buffer) {
         return function () {
           buffer.getVar(name, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -185,9 +185,9 @@ exports["setVar'"] = function (buffer) {
           return function () {
             buffer.setVar(name, value, function (err, result) {
               if (err) {
-                error(err);
+                error(err)();
               } else {
-                success(result);
+                success(result)();
               }
             });
           }
@@ -203,9 +203,9 @@ exports["delVar'"] = function (buffer) {
         return function () {
           buffer.delVar(name, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -220,9 +220,9 @@ exports["getOption'"] = function (buffer) {
         return function () {
           buffer.getOption(name, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -238,9 +238,9 @@ exports["setOption'"] = function (buffer) {
           return function () {
             buffer.setOption(name, value, function (err, result) {
               if (err) {
-                error(err);
+                error(err)();
               } else {
-                success(result);
+                success(result)();
               }
             });
           }
@@ -255,9 +255,9 @@ exports["getNumber'"] = function (buffer) {
       return function () {
         buffer.getNumber(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -270,9 +270,9 @@ exports["getName'"] = function (buffer) {
       return function () {
         buffer.getName(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -286,9 +286,9 @@ exports["setName'"] = function (buffer) {
         return function () {
           buffer.setName(name, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -302,9 +302,9 @@ exports["isValid'"] = function (buffer) {
       return function () {
         buffer.isValid(function (err, result) {
           if (err) {
-            error(err);
+            error(err)();
           } else {
-            success(result);
+            success(result)();
           }
         });
       }
@@ -319,9 +319,9 @@ exports["insert'"] = function (buffer) {
           return function () {
             buffer.insert(lnum, lines, function (err, result) {
               if (err) {
-                error(err);
+                error(err)();
               } else {
-                success(result);
+                success(result)();
               }
             });
           }
@@ -337,9 +337,9 @@ exports["getMark'"] = function (buffer) {
         return function () {
           buffer.getMark(name, function (err, result) {
             if (err) {
-              error(err);
+              error(err)();
             } else {
-              success(result);
+              success(result)();
             }
           });
         }
@@ -358,9 +358,9 @@ exports["addHighlight'"] = function (buffer) {
                 return function () {
                   buffer.addHighlight(src_id, hl_group, line, col_start, col_end, function (err, result) {
                     if (err) {
-                      error(err);
+                      error(err)();
                     } else {
-                      success(result);
+                      success(result)();
                     }
                   });
                 }
@@ -381,9 +381,9 @@ exports["clearHighlight'"] = function (buffer) {
             return function () {
               buffer.clearHighlight(src_id, line_start, line_end, function (err, result) {
                 if (err) {
-                  error(err);
+                  error(err)();
                 } else {
-                  success(result);
+                  success(result)();
                 }
               });
             }
