@@ -14,6 +14,16 @@ var getPlugin = function () {
   }
 };
 
+exports["wrapDone"] = function (done) {
+  return function (err) {
+    return function (result) {
+      return function () {
+        return done(err, result);
+      };
+    };
+  };
+};
+
 exports["commandSync'"] = function (name) {
   return function (opts) {
     return function (fn) {
