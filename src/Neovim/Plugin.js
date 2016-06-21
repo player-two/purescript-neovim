@@ -14,7 +14,7 @@ var getPlugin = function () {
   }
 };
 
-exports["commandSync"] = function (name) {
+exports["commandSync'"] = function (name) {
   return function (opts) {
     return function (fn) {
       return function () {
