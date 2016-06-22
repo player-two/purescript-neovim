@@ -1,4 +1,8 @@
-module Neovim.Ui where
+module Neovim.Ui
+  ( attach
+  , detach
+  , tryResize
+  ) where
 
 import Prelude
 import Control.Monad.Aff (makeAff, Aff)

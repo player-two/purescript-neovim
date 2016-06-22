@@ -1,4 +1,41 @@
-module Neovim.Vim where
+module Neovim.Vim
+  ( command
+  , feedkeys
+  , input
+  , replaceTermcodes
+  , commandOutput
+  , eval
+  , callFunction
+  , strwidth
+  , listRuntimePaths
+  , changeDirectory
+  , getCurrentLine
+  , setCurrentLine
+  , delCurrentLine
+  , getVar
+  , setVar
+  , delVar
+  , getVvar
+  , getOption
+  , setOption
+  , outWrite
+  , errWrite
+  , reportError
+  , getBuffers
+  , getCurrentBuffer
+  , setCurrentBuffer
+  , getWindows
+  , getCurrentWindow
+  , setCurrentWindow
+  , getTabpages
+  , getCurrentTabpage
+  , setCurrentTabpage
+  , subscribe
+  , unsubscribe
+  , nameToColor
+  , getColorMap
+  , getApiInfo
+  ) where
 
 import Prelude
 import Control.Monad.Aff (makeAff, Aff)

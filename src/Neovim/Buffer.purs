@@ -1,4 +1,26 @@
-module Neovim.Buffer where
+module Neovim.Buffer
+  ( lineCount
+  , getLine
+  , setLine
+  , delLine
+  , getLineSlice
+  , getLines
+  , setLineSlice
+  , setLines
+  , getVar
+  , setVar
+  , delVar
+  , getOption
+  , setOption
+  , getNumber
+  , getName
+  , setName
+  , isValid
+  , insert
+  , getMark
+  , addHighlight
+  , clearHighlight
+  ) where
 
 import Prelude
 import Control.Monad.Aff (makeAff, Aff)

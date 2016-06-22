@@ -1,4 +1,11 @@
-module Neovim.Tabpage where
+module Neovim.Tabpage
+  ( getWindows
+  , getVar
+  , setVar
+  , delVar
+  , getWindow
+  , isValid
+  ) where
 
 import Prelude
 import Control.Monad.Aff (makeAff, Aff)

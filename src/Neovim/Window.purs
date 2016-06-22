@@ -1,4 +1,20 @@
-module Neovim.Window where
+module Neovim.Window
+  ( getBuffer
+  , getCursor
+  , setCursor
+  , getHeight
+  , setHeight
+  , getWidth
+  , setWidth
+  , getVar
+  , setVar
+  , delVar
+  , getOption
+  , setOption
+  , getPosition
+  , getTabpage
+  , isValid
+  ) where
 
 import Prelude
 import Control.Monad.Aff (makeAff, Aff)

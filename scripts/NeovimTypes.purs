@@ -173,6 +173,9 @@ import Neovim.Types
 
 """ 
 
+exports :: (Array Func) -> String
+exports fs = "  ( " <> Str.joinWith "\n  , " (map (\(Func f) -> fnName f.name) fs) <> "\n  )"
+
 groupBy :: forall x. Array x -> (x -> String) -> StrMap (Array x)
 groupBy xs fn = foldl (\m x -> appendToGroup m (fn x) x) empty xs
   where appendToGroup m k v = insert k (case lookup k m of
@@ -192,7 +195,7 @@ defineModule m fs = sequence_ <<< map (\fn -> fn fs) $ effs
   where effs = [ writeTextFile' ("./src/Neovim/" <> m <> ".purs") <<< foldl (\s f -> s <> defFunc f) header
                , writeTextFile' ("./src/Neovim/" <> m <> ".js") <<< foldl (\s f -> s <> defForeignFunc f) DefineJs.header
                ]
-        header = "module Neovim." <> m <> " where\n" <> imports <> "\n"
+        header = "module Neovim." <> m <> "\n" <> exports fs <> " where\n" <> imports <> "\n"
 
 buildInterface :: forall e. ApiInfo -> Eff (err :: EXCEPTION, fs :: FS | e) Unit
 buildInterface (ApiInfo api) = sequence_ $ fold (\arr k v -> snoc arr (defineModule k v)) [types] modules
