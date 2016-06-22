@@ -4,7 +4,7 @@ Purescript bindings for the Neovim remote plugin API for use with the [node host
 
 Note: This project is still in very early development and is not at all stable.  As such, it has not been published to bower or pursuit, though that is the goal.
 
-### Installation
+### Example Installation
 
 * Follow the installation instructions for the node host.
 * Build the example (you need to create the `rplugin/node` directory if it does not exist)
