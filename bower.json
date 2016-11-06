@@ -13,14 +13,14 @@
     "output"
   ],
   "dependencies": {
-    "purescript-console": "^1.0.0",
-    "purescript-node-buffer": "~1.0.0",
-    "purescript-aff": "~1.0.0"
+    "purescript-console": "~2.0.0",
+    "purescript-node-buffer": "~2.0.0",
+    "purescript-aff": "~2.0.0"
   },
   "devDependencies": {
-    "purescript-psci-support": "^1.0.0",
-    "purescript-foreign": "~1.0.0",
-    "purescript-maps": "~1.0.0",
-    "purescript-node-fs": "~1.0.0"
+    "purescript-psci-support": "~2.0.0",
+    "purescript-foreign": "~3.0.0",
+    "purescript-maps": "~2.0.0",
+    "purescript-node-fs": "~3.0.0"
   }
 }

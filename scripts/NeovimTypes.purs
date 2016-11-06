@@ -10,7 +10,7 @@ import Data.Foldable (foldl, sequence_)
 import Data.Foreign (unsafeFromForeign)
 import Data.Foreign.Class (readJSON, readProp, class IsForeign)
 --import Data.Foreign.Undefined (unUndefined, Undefined)
-import Data.Maybe (Maybe(Just, Nothing))
+import Data.Maybe (maybe, Maybe(Just, Nothing))
 import Data.StrMap (empty, fold, insert, keys, lookup, StrMap)
 import Data.String (drop, joinWith, split, take, toUpper) as Str
 import Data.String.Regex (match, noFlags, regex, test, Regex)
@@ -87,9 +87,8 @@ titlecase "" = ""
 titlecase s = Str.toUpper (Str.take 1 s) <> Str.drop 1 s
 
 fnName :: String -> String
-fnName n = case (uncons <<< drop 1 <<< Str.split "_") n of
-                Nothing -> "" -- TODO: throw an error
-                Just { head: x, tail: xs } -> foldl (\a s -> a <> titlecase s) x xs
+fnName n = maybe "" recombine ((uncons <<< drop 1 <<< Str.split "_") n)
+  where recombine { head: x, tail: xs } = foldl (\a s -> a <> titlecase s) x xs
 
 fnType :: Func -> String
 fnType (Func f) = fnArgs f.parameters
@@ -145,7 +144,8 @@ parameters f = if subname == "ui" || subname == "vi" then cons ["Vim", "vim"] f.
   where subname = Str.take 2 f.name
 
 defFunc :: Func -> String
-defFunc (Func f) = "foreign import " <> name <> "' :: forall e1 e2. " <> args <> "(Error -> Eff e1 Unit) -> (" <> ret <>  " -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit" <> "\n\n"
+defFunc (Func f) = "foreign import " <> name <> "' :: forall e1 e2. " <> args <> "(Error -> Eff e1 Unit) -> ("
+  <> ret <>  " -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit" <> "\n\n"
   <> name <> " :: forall a. " <> args <> "Aff (plugin :: PLUGIN | a) " <> ret <> "\n"
   <> name <> " " <> argNames <> " = makeAff $ " <> name <> "' " <> argNames <> "\n\n\n"
     where name = fnName f.name
@@ -178,15 +178,11 @@ exports fs = "  ( " <> Str.joinWith "\n  , " (map (\(Func f) -> fnName f.name) f
 
 groupBy :: forall x. Array x -> (x -> String) -> StrMap (Array x)
 groupBy xs fn = foldl (\m x -> appendToGroup m (fn x) x) empty xs
-  where appendToGroup m k v = insert k (case lookup k m of
-                                             Just others -> snoc others v
-                                             Nothing -> [v]) m
+  where appendToGroup m k v = insert k (maybe [v] (flip snoc v) (lookup k m)) m
 
 splitByModule :: (Array Func) -> StrMap (Array Func)
 splitByModule fs = groupBy fs moduleName
-  where moduleName (Func f) = case (uncons <<< Str.split "_") f.name of
-                                   Just { head: m } -> titlecase m
-                                   Nothing -> "unknown" -- TODO: throw error
+  where moduleName (Func f) = maybe "unknown" (\{ head: m } -> titlecase m) ((uncons <<< Str.split "_") f.name)
 
 writeTextFile' = writeTextFile UTF8
 
