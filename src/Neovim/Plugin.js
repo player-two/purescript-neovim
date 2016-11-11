@@ -49,25 +49,21 @@ exports["commandSync'"] = function (name) {
 };
 
 exports["function'"] = function (name) {
-  return function (opts) {
-    return function (fn) {
-      return function () {
-        getPlugin()['function'](name, opts, function (vim, args) {
-          fn(vim)(args)();
-        });
-      }
+  return function (fn) {
+    return function () {
+      getPlugin()['function'](name, function (vim, args) {
+        fn(vim)(args)();
+      });
     }
   }
 };
 
 exports["functionSync'"] = function (name) {
-  return function (opts) {
-    return function (fn) {
-      return function () {
-        getPlugin().functionSync(name, opts, function (vim, args, done) {
-          fn(vim)(args)(done)();
-        });
-      }
+  return function (fn) {
+    return function () {
+      getPlugin().functionSync(name, function (vim, args, done) {
+        fn(vim)(args)(done)();
+      });
     }
   }
 };
