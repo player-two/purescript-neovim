@@ -16,6 +16,7 @@ module Neovim.Plugin
 import Prelude
 import Control.Monad.Aff (runAff, Aff)
 import Control.Monad.Eff (Eff)
+import Control.Monad.Eff.Class (liftEff)
 import Data.Maybe (Maybe(Nothing))
 import Data.Nullable (toNullable)
 import Data.StrMap (insert, singleton, StrMap)
@@ -29,7 +30,10 @@ foreign import data PLUGIN :: !
 
 -- | The debug function will print any value to the file defined by
 -- | the `$NEOVIM_JS_DEBUG` environment variable.
-foreign import debug :: forall a e. a -> Eff (plugin :: PLUGIN | e) Unit
+foreign import debug' :: forall a e. a -> Eff (plugin :: PLUGIN | e) Unit
+
+debug :: forall a e. a -> Aff (plugin :: PLUGIN | e) Unit
+debug = liftEff <<< debug'
 
 
 compose12 :: forall a b c d. (c -> d) -> (a -> b -> c) -> a -> b -> d
@@ -63,7 +67,7 @@ ignore :: forall a e. Eff e a -> Eff e Unit
 ignore = (_ >>= \_ -> pure unit)
 
 runHandler :: forall a e. Aff (plugin :: PLUGIN | e) a -> Eff (plugin :: PLUGIN | e) Unit
-runHandler = ignore <<< runAff debug debug
+runHandler = ignore <<< runAff debug' debug'
 
 runHandlerSync :: forall a e. Done -> Aff (plugin :: PLUGIN | e) a -> Eff (plugin :: PLUGIN | e) Unit
 runHandlerSync done = ignore <<< runAff (flip (wrapDone done) null) (wrapDone done null)

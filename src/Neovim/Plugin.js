@@ -1,6 +1,6 @@
 'use strict';
 
-exports.debug = function (obj) {
+exports["debug'"] = function (obj) {
   return function () {
     debug(obj)
   }
