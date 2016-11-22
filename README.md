@@ -1,5 +1,7 @@
 # purescript-neovim
 
+[![Latest release](http://img.shields.io/github/release/megalord/purescript-neovim.svg)](https://github.com/megalord/purescript-neovim/releases)
+
 Purescript bindings for the Neovim remote plugin API for use with the [node host](https://github.com/neovim/node-host).
 
 ### Example Installation
@@ -27,3 +29,7 @@ The interface is auto-generated from the metadata returned by `nvim --api-info`.
 ```
 pulp run --src-path scripts -m NeovimTypes
 ```
+
+## Documentation
+
+Module documentation is [published on Pursuit](http://pursuit.purescript.org/packages/purescript-neovim).
