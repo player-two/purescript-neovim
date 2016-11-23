@@ -5,14 +5,14 @@ import Control.Monad.Eff (Eff())
 import Control.Monad.Eff.Console (log, CONSOLE)
 import Control.Monad.Eff.Exception (error, EXCEPTION)
 import Control.Monad.Except (runExcept, throwError)
-import Data.Array (cons, drop, snoc, uncons)
+import Data.Array (cons, drop, filter, snoc, uncons)
 import Data.Either (either, Either(Left, Right))
 import Data.Foldable (foldl, sequence_)
 import Data.Foreign (unsafeFromForeign, unsafeReadTagged, Foreign, F)
 import Data.Foreign.Class (readJSON, readProp, class IsForeign)
 import Data.Maybe (maybe, maybe', Maybe(Just, Nothing))
 import Data.StrMap (alter, empty, fold, fromFoldable, insert, keys, lookup, StrMap)
-import Data.String (drop, joinWith, split, stripPrefix, take, toUpper, Pattern(..)) as Str
+import Data.String as Str
 import Data.String.Regex (match, regex, test, Regex)
 import Data.String.Regex.Flags (noFlags)
 import Data.Tuple (fst, snd, Tuple(..))
@@ -201,7 +201,8 @@ getModule types (Func f) = foldUntil default (\n (Type t) -> (Tuple n <<< change
         default _ = Tuple "Nvim" $ maybe (Func f) (changeName f) (Str.stripPrefix (Str.Pattern "nvim_") f.name)
 
 splitByModule :: ApiInfo -> StrMap (Array Func)
-splitByModule (ApiInfo api) = groupByMap (getModule api.types) api.functions
+splitByModule (ApiInfo api) = groupByMap (getModule api.types) (filter nonDeprecated api.functions)
+  where nonDeprecated = Str.contains (Str.Pattern "nvim_") <<< (\(Func f) -> f.name)
 
 writeTextFile' = writeTextFile UTF8
 
