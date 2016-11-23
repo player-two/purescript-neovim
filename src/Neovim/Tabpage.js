@@ -1,10 +1,10 @@
 'use strict';
 
-exports["getWindows'"] = function (tabpage) {
+exports["listWins'"] = function (tabpage) {
   return function (error) {
     return function (success) {
       return function () {
-        tabpage.getWindows(function (err, result) {
+        tabpage.listWins(function (err, result) {
           if (err) {
             error(err)();
           } else {
@@ -68,11 +68,26 @@ exports["delVar'"] = function (tabpage) {
     }
   }
 }
-exports["getWindow'"] = function (tabpage) {
+exports["getWin'"] = function (tabpage) {
   return function (error) {
     return function (success) {
       return function () {
-        tabpage.getWindow(function (err, result) {
+        tabpage.getWin(function (err, result) {
+          if (err) {
+            error(err)();
+          } else {
+            success(result)();
+          }
+        });
+      }
+    }
+  }
+}
+exports["getNumber'"] = function (tabpage) {
+  return function (error) {
+    return function (success) {
+      return function () {
+        tabpage.getNumber(function (err, result) {
           if (err) {
             error(err)();
           } else {

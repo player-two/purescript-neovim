@@ -3,17 +3,19 @@ module NeovimTypes where
 import Prelude
 import Control.Monad.Eff (Eff())
 import Control.Monad.Eff.Console (log, CONSOLE)
-import Control.Monad.Eff.Exception (EXCEPTION)
+import Control.Monad.Eff.Exception (error, EXCEPTION)
+import Control.Monad.Except (runExcept, throwError)
 import Data.Array (cons, drop, snoc, uncons)
 import Data.Either (either, Either(Left, Right))
 import Data.Foldable (foldl, sequence_)
-import Data.Foreign (unsafeFromForeign)
+import Data.Foreign (unsafeFromForeign, unsafeReadTagged, Foreign, F)
 import Data.Foreign.Class (readJSON, readProp, class IsForeign)
---import Data.Foreign.Undefined (unUndefined, Undefined)
-import Data.Maybe (maybe, Maybe(Just, Nothing))
-import Data.StrMap (empty, fold, insert, keys, lookup, StrMap)
-import Data.String (drop, joinWith, split, take, toUpper) as Str
-import Data.String.Regex (match, noFlags, regex, test, Regex)
+import Data.Maybe (maybe, maybe', Maybe(Just, Nothing))
+import Data.StrMap (alter, empty, fold, fromFoldable, insert, keys, lookup, StrMap)
+import Data.String (drop, joinWith, split, stripPrefix, take, toUpper, Pattern(..)) as Str
+import Data.String.Regex (match, regex, test, Regex)
+import Data.String.Regex.Flags (noFlags)
+import Data.Tuple (fst, snd, Tuple(..))
 import Node.Buffer (toString, BUFFER)
 import Node.ChildProcess (exec, ExecResult, CHILD_PROCESS)
 import Node.Encoding (Encoding(UTF8))
@@ -27,13 +29,13 @@ main :: forall e. Eff (buffer :: BUFFER, cp :: CHILD_PROCESS, console :: CONSOLE
 main = exec "nvim --api-info | msgpack2json" handle
 
 handle :: forall e. ExecResult -> Eff (buffer :: BUFFER, cp :: CHILD_PROCESS, console :: CONSOLE, err :: EXCEPTION, fs :: FS | e) Unit
-handle { stderr: err, stdout: out, error: Nothing } = toString UTF8 out >>= (either err buildInterface <<< readJSON)
+handle { stderr: err, stdout: out, error: Nothing } = toString UTF8 out >>= (either err buildInterface <<< runExcept <<< readJSON)
   where err = log <<< show
 handle { error: Just e } = (log <<< show) e
 
 data ApiInfo = ApiInfo
   { functions :: Array Func
-  , typeDefs :: TypeDefs
+  , types :: StrMap Type
   --, errorTypes:
   }
 
@@ -41,14 +43,18 @@ instance apiInfoIsForeign :: IsForeign ApiInfo where
   read value = do
     fs <- readProp "functions" value
     ts <- readProp "types" value
-    pure $ ApiInfo { functions: fs , typeDefs: ts }
+
+    -- TODO: figure out generic way
+    buf <- readProp "Buffer" ts
+    win <- readProp "Window" ts
+    tab <- readProp "Tabpage" ts
+
+    pure $ ApiInfo { functions: fs, types: fromFoldable [ Tuple "Buffer" buf, Tuple "Window" win, Tuple "Tabpage" tab ] }
 
 data Func = Func
   { name :: String
   , parameters :: Array Parameter
   , returnType :: String
-  , async :: Boolean
-  --, canFail :: Undefined Boolean
   }
 
 instance funcIsForeign :: IsForeign Func where
@@ -56,9 +62,7 @@ instance funcIsForeign :: IsForeign Func where
     n <- readProp "name" value
     ps <- readProp "parameters" value
     ret <- readProp "return_type" value
-    a <- readProp "async" value
-    --cf <- readProp "can_fail" value
-    pure $ Func { name: n, parameters: ps, returnType: ret, async: a } --, canFail: cf }
+    pure $ Func { name: n, parameters: ps, returnType: ret }
 
 type Parameter = Array String
 
@@ -69,15 +73,17 @@ type Parameter = Array String
 --                   case v of
 --                       [fa, fb] -> case [readString fa, readString fb] Parameter a b
 --                       [] ->  Left "wrong number of elements in Parameter"
---data Type = Window | Buffer | Tabpage
 
-newtype TypeDefs = TypeDefs (StrMap (StrMap Int))
+data Type = Type
+  { id :: Int
+  , prefix :: String
+  }
 
-getDefs :: TypeDefs -> StrMap (StrMap Int)
-getDefs (TypeDefs tds) = tds
-
-instance typeDefsIsForeign :: IsForeign TypeDefs where
-  read = pure <<< unsafeFromForeign
+instance typeIsForeign :: IsForeign Type where
+  read value = do
+    id <- readProp "id" value
+    prefix <- readProp "prefix" value
+    pure $ Type { id: id, prefix: prefix }
 
 defTypes :: (Array String) -> String
 defTypes = foldl (\s t -> s <> "foreign import data " <> t <> " :: *\n") ""
@@ -87,7 +93,7 @@ titlecase "" = ""
 titlecase s = Str.toUpper (Str.take 1 s) <> Str.drop 1 s
 
 fnName :: String -> String
-fnName n = maybe "" recombine ((uncons <<< drop 1 <<< Str.split "_") n)
+fnName n = maybe "" recombine ((uncons <<< Str.split (Str.Pattern "_")) n)
   where recombine { head: x, tail: xs } = foldl (\a s -> a <> titlecase s) x xs
 
 fnType :: Func -> String
@@ -146,6 +152,7 @@ parameters f = if subname == "ui" || subname == "vi" then cons ["Vim", "vim"] f.
 defFunc :: Func -> String
 defFunc (Func f) = "foreign import " <> name <> "' :: forall e1 e2. " <> args <> "(Error -> Eff e1 Unit) -> ("
   <> ret <>  " -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit" <> "\n\n"
+  <> "-- | args: `" <> argNames <> "`\n"
   <> name <> " :: forall a. " <> args <> "Aff (plugin :: PLUGIN | a) " <> ret <> "\n"
   <> name <> " " <> argNames <> " = makeAff $ " <> name <> "' " <> argNames <> "\n\n\n"
     where name = fnName f.name
@@ -176,13 +183,25 @@ import Neovim.Types
 exports :: (Array Func) -> String
 exports fs = "  ( " <> Str.joinWith "\n  , " (map (\(Func f) -> fnName f.name) fs) <> "\n  )"
 
-groupBy :: forall x. Array x -> (x -> String) -> StrMap (Array x)
-groupBy xs fn = foldl (\m x -> appendToGroup m (fn x) x) empty xs
-  where appendToGroup m k v = insert k (maybe [v] (flip snoc v) (lookup k m)) m
+groupByMap :: forall a b. (a -> Tuple String b) -> (Array a) -> StrMap (Array b)
+groupByMap fn = foldl (\d x -> let res = fn x in alter (append (snd res)) (fst res) d) empty
+  where append x = Just <<< maybe' (\_ -> [x]) (flip snoc x)
 
-splitByModule :: (Array Func) -> StrMap (Array Func)
-splitByModule fs = groupBy fs moduleName
-  where moduleName (Func f) = maybe "unknown" (\{ head: m } -> titlecase m) ((uncons <<< Str.split "_") f.name)
+--onlyNvim :: Array Func -> Array Func
+--onlyNvim = foldl (\fs (Func f) -> maybe' (\_ -> snoc fs f) (snoc fs <<< changeName f) $ Str.stripPrefix (Str.Pattern "nvim_") f.name) []
+--  where changeName f name = Func (f { name = name })
+
+foldUntil :: forall a b. (Unit -> b) -> (String -> a -> Maybe b) -> (StrMap a) -> b
+foldUntil default f dict = maybe' default id (recur (keys dict))
+  where recur ks = uncons ks >>= (\{ head: k, tail: ks } -> maybe' (\_ -> recur ks) Just (lookup k dict >>= f k))
+
+getModule :: StrMap Type -> Func -> Tuple String Func
+getModule types (Func f) = foldUntil default (\n (Type t) -> (Tuple n <<< changeName f) <$> Str.stripPrefix (Str.Pattern t.prefix) f.name) types
+  where changeName f name = Func (f { name = name })
+        default _ = Tuple "Nvim" $ maybe (Func f) (changeName f) (Str.stripPrefix (Str.Pattern "nvim_") f.name)
+
+splitByModule :: ApiInfo -> StrMap (Array Func)
+splitByModule (ApiInfo api) = groupByMap (getModule api.types) api.functions
 
 writeTextFile' = writeTextFile UTF8
 
@@ -194,7 +213,7 @@ defineModule m fs = sequence_ <<< map (\fn -> fn fs) $ effs
         header = "module Neovim." <> m <> "\n" <> exports fs <> " where\n" <> imports <> "\n"
 
 buildInterface :: forall e. ApiInfo -> Eff (err :: EXCEPTION, fs :: FS | e) Unit
-buildInterface (ApiInfo api) = sequence_ $ fold (\arr k v -> snoc arr (defineModule k v)) [types] modules
-  where modules = splitByModule api.functions
+buildInterface api = sequence_ $ fold (\arr k v -> snoc arr (defineModule k v)) [types] modules
+  where modules = splitByModule api
         types = writeTextFile' ("./src/Neovim/Types.purs") $ foldl (<>) "module Neovim.Types where\n\n" (map defImport (keys modules))
         defImport d = "foreign import data " <> d <> " :: *\n"

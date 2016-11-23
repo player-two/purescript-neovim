@@ -15,82 +15,6 @@ exports["lineCount'"] = function (buffer) {
     }
   }
 }
-exports["getLine'"] = function (buffer) {
-  return function (index) {
-    return function (error) {
-      return function (success) {
-        return function () {
-          buffer.getLine(index, function (err, result) {
-            if (err) {
-              error(err)();
-            } else {
-              success(result)();
-            }
-          });
-        }
-      }
-    }
-  }
-}
-exports["setLine'"] = function (buffer) {
-  return function (index) {
-    return function (line) {
-      return function (error) {
-        return function (success) {
-          return function () {
-            buffer.setLine(index, line, function (err, result) {
-              if (err) {
-                error(err)();
-              } else {
-                success(result)();
-              }
-            });
-          }
-        }
-      }
-    }
-  }
-}
-exports["delLine'"] = function (buffer) {
-  return function (index) {
-    return function (error) {
-      return function (success) {
-        return function () {
-          buffer.delLine(index, function (err, result) {
-            if (err) {
-              error(err)();
-            } else {
-              success(result)();
-            }
-          });
-        }
-      }
-    }
-  }
-}
-exports["getLineSlice'"] = function (buffer) {
-  return function (start) {
-    return function (end) {
-      return function (include_start) {
-        return function (include_end) {
-          return function (error) {
-            return function (success) {
-              return function () {
-                buffer.getLineSlice(start, end, include_start, include_end, function (err, result) {
-                  if (err) {
-                    error(err)();
-                  } else {
-                    success(result)();
-                  }
-                });
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
 exports["getLines'"] = function (buffer) {
   return function (start) {
     return function (end) {
@@ -105,31 +29,6 @@ exports["getLines'"] = function (buffer) {
                   success(result)();
                 }
               });
-            }
-          }
-        }
-      }
-    }
-  }
-}
-exports["setLineSlice'"] = function (buffer) {
-  return function (start) {
-    return function (end) {
-      return function (include_start) {
-        return function (include_end) {
-          return function (replacement) {
-            return function (error) {
-              return function (success) {
-                return function () {
-                  buffer.setLineSlice(start, end, include_start, include_end, replacement, function (err, result) {
-                    if (err) {
-                      error(err)();
-                    } else {
-                      success(result)();
-                    }
-                  });
-                }
-              }
             }
           }
         }
@@ -307,25 +206,6 @@ exports["isValid'"] = function (buffer) {
             success(result)();
           }
         });
-      }
-    }
-  }
-}
-exports["insert'"] = function (buffer) {
-  return function (lnum) {
-    return function (lines) {
-      return function (error) {
-        return function (success) {
-          return function () {
-            buffer.insert(lnum, lines, function (err, result) {
-              if (err) {
-                error(err)();
-              } else {
-                success(result)();
-              }
-            });
-          }
-        }
       }
     }
   }

@@ -1,10 +1,10 @@
 'use strict';
 
-exports["getBuffer'"] = function (window) {
+exports["getBuf'"] = function (window) {
   return function (error) {
     return function (success) {
       return function () {
-        window.getBuffer(function (err, result) {
+        window.getBuf(function (err, result) {
           if (err) {
             error(err)();
           } else {
@@ -220,6 +220,21 @@ exports["getTabpage'"] = function (window) {
     return function (success) {
       return function () {
         window.getTabpage(function (err, result) {
+          if (err) {
+            error(err)();
+          } else {
+            success(result)();
+          }
+        });
+      }
+    }
+  }
+}
+exports["getNumber'"] = function (window) {
+  return function (error) {
+    return function (success) {
+      return function () {
+        window.getNumber(function (err, result) {
           if (err) {
             error(err)();
           } else {

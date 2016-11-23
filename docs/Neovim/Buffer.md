@@ -1,16 +1,12 @@
 ## Module Neovim.Buffer
 
-#### `lineCount`
-
-``` purescript
-lineCount :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Int
-```
-
 #### `getLine`
 
 ``` purescript
 getLine :: forall a. Buffer -> Int -> Aff (plugin :: PLUGIN | a) String
 ```
+
+args: `buffer index`
 
 #### `setLine`
 
@@ -18,11 +14,15 @@ getLine :: forall a. Buffer -> Int -> Aff (plugin :: PLUGIN | a) String
 setLine :: forall a. Buffer -> Int -> String -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
+args: `buffer index line`
+
 #### `delLine`
 
 ``` purescript
 delLine :: forall a. Buffer -> Int -> Aff (plugin :: PLUGIN | a) Unit
 ```
+
+args: `buffer index`
 
 #### `getLineSlice`
 
@@ -30,11 +30,7 @@ delLine :: forall a. Buffer -> Int -> Aff (plugin :: PLUGIN | a) Unit
 getLineSlice :: forall a. Buffer -> Int -> Int -> Boolean -> Boolean -> Aff (plugin :: PLUGIN | a) (Array String)
 ```
 
-#### `getLines`
-
-``` purescript
-getLines :: forall a. Buffer -> Int -> Int -> Boolean -> Aff (plugin :: PLUGIN | a) (Array String)
-```
+args: `buffer start end include_start include_end`
 
 #### `setLineSlice`
 
@@ -42,17 +38,7 @@ getLines :: forall a. Buffer -> Int -> Int -> Boolean -> Aff (plugin :: PLUGIN |
 setLineSlice :: forall a. Buffer -> Int -> Int -> Boolean -> Boolean -> (Array String) -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-#### `setLines`
-
-``` purescript
-setLines :: forall a. Buffer -> Int -> Int -> Boolean -> (Array String) -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-#### `getVar`
-
-``` purescript
-getVar :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Foreign
-```
+args: `buffer start end include_start include_end replacement`
 
 #### `setVar`
 
@@ -60,47 +46,15 @@ getVar :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Foreign
 setVar :: forall a. Buffer -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Foreign
 ```
 
+args: `buffer name value`
+
 #### `delVar`
 
 ``` purescript
 delVar :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Foreign
 ```
 
-#### `getOption`
-
-``` purescript
-getOption :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Foreign
-```
-
-#### `setOption`
-
-``` purescript
-setOption :: forall a. Buffer -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-#### `getNumber`
-
-``` purescript
-getNumber :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Int
-```
-
-#### `getName`
-
-``` purescript
-getName :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) String
-```
-
-#### `setName`
-
-``` purescript
-setName :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-#### `isValid`
-
-``` purescript
-isValid :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Boolean
-```
+args: `buffer name`
 
 #### `insert`
 
@@ -108,11 +62,95 @@ isValid :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Boolean
 insert :: forall a. Buffer -> Int -> (Array String) -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
+args: `buffer lnum lines`
+
+#### `lineCount`
+
+``` purescript
+lineCount :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Int
+```
+
+args: `buffer`
+
+#### `getLines`
+
+``` purescript
+getLines :: forall a. Buffer -> Int -> Int -> Boolean -> Aff (plugin :: PLUGIN | a) (Array String)
+```
+
+args: `buffer start end strict_indexing`
+
+#### `setLines`
+
+``` purescript
+setLines :: forall a. Buffer -> Int -> Int -> Boolean -> (Array String) -> Aff (plugin :: PLUGIN | a) Unit
+```
+
+args: `buffer start end strict_indexing replacement`
+
+#### `getVar`
+
+``` purescript
+getVar :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Foreign
+```
+
+args: `buffer name`
+
+#### `getOption`
+
+``` purescript
+getOption :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Foreign
+```
+
+args: `buffer name`
+
+#### `setOption`
+
+``` purescript
+setOption :: forall a. Buffer -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
+```
+
+args: `buffer name value`
+
+#### `getNumber`
+
+``` purescript
+getNumber :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Int
+```
+
+args: `buffer`
+
+#### `getName`
+
+``` purescript
+getName :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) String
+```
+
+args: `buffer`
+
+#### `setName`
+
+``` purescript
+setName :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Unit
+```
+
+args: `buffer name`
+
+#### `isValid`
+
+``` purescript
+isValid :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Boolean
+```
+
+args: `buffer`
+
 #### `getMark`
 
 ``` purescript
 getMark :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) (Array Int)
 ```
+
+args: `buffer name`
 
 #### `addHighlight`
 
@@ -120,10 +158,14 @@ getMark :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) (Array Int)
 addHighlight :: forall a. Buffer -> Int -> String -> Int -> Int -> Int -> Aff (plugin :: PLUGIN | a) Int
 ```
 
+args: `buffer src_id hl_group line col_start col_end`
+
 #### `clearHighlight`
 
 ``` purescript
 clearHighlight :: forall a. Buffer -> Int -> Int -> Int -> Aff (plugin :: PLUGIN | a) Unit
 ```
+
+args: `buffer src_id line_start line_end`
 
 

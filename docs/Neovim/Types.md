@@ -1,5 +1,11 @@
 ## Module Neovim.Types
 
+#### `Nvim`
+
+``` purescript
+data Nvim :: *
+```
+
 #### `Buffer`
 
 ``` purescript

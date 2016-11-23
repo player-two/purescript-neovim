@@ -4,7 +4,7 @@ import Prelude
 import Data.Array (drop, head, range, snoc, uncons)
 import Data.Foldable (foldl)
 import Data.Maybe (maybe)
-import Data.String (joinWith, replace)
+import Data.String (joinWith, replace, Pattern(..), Replacement(..))
 
 header = "'use strict';\n\n"
 
@@ -38,7 +38,7 @@ asyncFuncForm objName fname args a b = [ asyncFuncCall objName fname args <> "fu
                     , "  }"
                     , "});"
                     ]
-  where asyncFuncCall objName fname args = objName <> "." <> replace "'" "" fname <> "(" <> foldl (\s a -> s <> a <> ", ") "" (drop 1 args)
+  where asyncFuncCall objName fname args = objName <> "." <> replace (Pattern "'") (Replacement "") fname <> "(" <> foldl (\s a -> s <> a <> ", ") "" (drop 1 args)
 
 defAsyncFunc :: String -> (Array String) -> String
 defAsyncFunc name args = defFunc name (snoc (snoc args "error") "success") body
