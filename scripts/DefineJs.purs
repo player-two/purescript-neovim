@@ -1,17 +1,12 @@
 module DefineJs where
 
 import Prelude
-import Data.Array (drop, head, range, snoc, uncons)
+import Data.Array (drop, head, range, replicate, snoc, uncons)
 import Data.Foldable (foldl)
 import Data.Maybe (maybe)
 import Data.String (joinWith, replace, Pattern(..), Replacement(..))
 
 header = "'use strict';\n\n"
-
--- defined in newer version of Data.Array
-replicate :: forall a. Int -> a -> Array a
-replicate 0 _ = []
-replicate n v = map (\_ -> v) (range 1 n)
 
 indent :: Int -> String
 indent n = foldl (<>) "" (replicate (n * 2) " ")
