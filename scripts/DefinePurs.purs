@@ -50,9 +50,6 @@ defTypes = foldl (\s t -> s <> "foreign import data " <> t <> " :: *\n") ""
 exports :: (Array Func) -> String
 exports fs = "  ( " <> joinWith "\n  , " (map (\(Func f) -> fnName f.name) fs) <> "\n  )"
 
-parameters f = if subname == "ui" || subname == "vi" then cons ["Vim", "vim"] f.parameters else f.parameters
-  where subname = take 2 f.name
-
 defImport d = "foreign import data " <> d <> " :: *\n"
 
 defFunc :: Func -> String
@@ -62,12 +59,11 @@ defFunc (Func f) = "foreign import " <> name <> "' :: forall e1 e2. " <> args <>
   <> name <> " :: forall a. " <> args <> "Aff (plugin :: PLUGIN | a) " <> ret <> "\n"
   <> name <> " " <> argNames <> " = makeAff $ " <> name <> "' " <> argNames <> "\n\n\n"
     where name = fnName f.name
-          params = parameters f
-          args = fnArgs params
-          argNames = fnArgNames params
+          args = fnArgs f.parameters
+          argNames = fnArgNames f.parameters
           ret = ApiInfo.mapType f.returnType
 
 defForeignFunc :: Func -> String
-defForeignFunc (Func f) = DefineJs.defAsyncFunc (fnName f.name) (map argName (parameters f))
+defForeignFunc (Func f) = DefineJs.defAsyncFunc (fnName f.name) (map argName f.parameters)
   where argName [_, n] = n
         argName _ = ""

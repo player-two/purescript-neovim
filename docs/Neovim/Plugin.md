@@ -50,7 +50,7 @@ Sensible defaults for a command or autocmd
 #### `command`
 
 ``` purescript
-command :: forall e. String -> Opts -> (Vim -> Args -> Range -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
+command :: forall e. String -> Opts -> (Nvim -> Args -> Range -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
 ```
 
 Define a new Neovim command.
@@ -58,7 +58,7 @@ Define a new Neovim command.
 #### `commandSync`
 
 ``` purescript
-commandSync :: forall e. String -> Opts -> (Vim -> Args -> Range -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
+commandSync :: forall e. String -> Opts -> (Nvim -> Args -> Range -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
 ```
 
 Define a new Neovim command that will block until it completes.
@@ -66,7 +66,7 @@ Define a new Neovim command that will block until it completes.
 #### `autocmd`
 
 ``` purescript
-autocmd :: forall e. String -> Opts -> (Vim -> String -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
+autocmd :: forall e. String -> Opts -> (Nvim -> String -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
 ```
 
 Define a new Neovim autocmd.
@@ -74,7 +74,7 @@ Define a new Neovim autocmd.
 #### `autocmdSync`
 
 ``` purescript
-autocmdSync :: forall e. String -> Opts -> (Vim -> String -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
+autocmdSync :: forall e. String -> Opts -> (Nvim -> String -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
 ```
 
 Define a new Neovim autocmd that will block until it completes.
@@ -82,7 +82,7 @@ Define a new Neovim autocmd that will block until it completes.
 #### `function`
 
 ``` purescript
-function :: forall e. String -> (Vim -> Args -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
+function :: forall e. String -> (Nvim -> Args -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
 ```
 
 Define a new Neovim function.
@@ -90,7 +90,7 @@ Define a new Neovim function.
 #### `functionSync`
 
 ``` purescript
-functionSync :: forall e. String -> (Vim -> Args -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
+functionSync :: forall e. String -> (Nvim -> Args -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
 ```
 
 Define a new Neovim function that will block until it completes.

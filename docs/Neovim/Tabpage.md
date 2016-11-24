@@ -1,25 +1,9 @@
 ## Module Neovim.Tabpage
 
-#### `setVar`
+#### `listWins`
 
 ``` purescript
-setVar :: forall a. Tabpage -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Foreign
-```
-
-args: `tabpage name value`
-
-#### `delVar`
-
-``` purescript
-delVar :: forall a. Tabpage -> String -> Aff (plugin :: PLUGIN | a) Foreign
-```
-
-args: `tabpage name`
-
-#### `getWindows`
-
-``` purescript
-getWindows :: forall a. Tabpage -> Aff (plugin :: PLUGIN | a) (Array Window)
+listWins :: forall a. Tabpage -> Aff (plugin :: PLUGIN | a) (Array Window)
 ```
 
 args: `tabpage`
@@ -32,10 +16,34 @@ getVar :: forall a. Tabpage -> String -> Aff (plugin :: PLUGIN | a) Foreign
 
 args: `tabpage name`
 
-#### `getWindow`
+#### `setVar`
 
 ``` purescript
-getWindow :: forall a. Tabpage -> Aff (plugin :: PLUGIN | a) Window
+setVar :: forall a. Tabpage -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
+```
+
+args: `tabpage name value`
+
+#### `delVar`
+
+``` purescript
+delVar :: forall a. Tabpage -> String -> Aff (plugin :: PLUGIN | a) Unit
+```
+
+args: `tabpage name`
+
+#### `getWin`
+
+``` purescript
+getWin :: forall a. Tabpage -> Aff (plugin :: PLUGIN | a) Window
+```
+
+args: `tabpage`
+
+#### `getNumber`
+
+``` purescript
+getNumber :: forall a. Tabpage -> Aff (plugin :: PLUGIN | a) Int
 ```
 
 args: `tabpage`

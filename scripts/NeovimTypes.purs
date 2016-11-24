@@ -5,7 +5,7 @@ import Control.Monad.Eff (Eff())
 import Control.Monad.Eff.Console (log, CONSOLE)
 import Control.Monad.Eff.Exception (EXCEPTION)
 import Control.Monad.Except (runExcept)
-import Data.Array (filter, snoc, uncons)
+import Data.Array ((:), filter, snoc, uncons)
 import Data.Either (either)
 import Data.Foldable (foldl, sequence_)
 import Data.Foreign.Class (readJSON)
@@ -43,7 +43,8 @@ foldUntil default f dict = maybe' default id (recur (keys dict))
 getModule :: StrMap Type -> Func -> Tuple String Func
 getModule types (Func f) = foldUntil default (\n (Type t) -> (Tuple n <<< changeName f) <$> Str.stripPrefix (Str.Pattern t.prefix) f.name) types
   where changeName f name = Func (f { name = name })
-        default _ = Tuple "Nvim" $ maybe (Func f) (changeName f) (Str.stripPrefix (Str.Pattern "nvim_") f.name)
+        addNvimParam f = f { parameters = ["Nvim", "nvim"]:f.parameters }
+        default _ = Tuple "Nvim" $ maybe (Func f) (changeName $ addNvimParam f) (Str.stripPrefix (Str.Pattern "nvim_") f.name)
 
 splitByModule :: ApiInfo -> StrMap (Array Func)
 splitByModule (ApiInfo api) = groupByMap (getModule api.types) (filter nonDeprecated api.functions)

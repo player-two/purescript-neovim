@@ -1,25 +1,9 @@
 ## Module Neovim.Window
 
-#### `setVar`
+#### `getBuf`
 
 ``` purescript
-setVar :: forall a. Window -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Foreign
-```
-
-args: `window name value`
-
-#### `delVar`
-
-``` purescript
-delVar :: forall a. Window -> String -> Aff (plugin :: PLUGIN | a) Foreign
-```
-
-args: `window name`
-
-#### `getBuffer`
-
-``` purescript
-getBuffer :: forall a. Window -> Aff (plugin :: PLUGIN | a) Buffer
+getBuf :: forall a. Window -> Aff (plugin :: PLUGIN | a) Buffer
 ```
 
 args: `window`
@@ -80,6 +64,22 @@ getVar :: forall a. Window -> String -> Aff (plugin :: PLUGIN | a) Foreign
 
 args: `window name`
 
+#### `setVar`
+
+``` purescript
+setVar :: forall a. Window -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
+```
+
+args: `window name value`
+
+#### `delVar`
+
+``` purescript
+delVar :: forall a. Window -> String -> Aff (plugin :: PLUGIN | a) Unit
+```
+
+args: `window name`
+
 #### `getOption`
 
 ``` purescript
@@ -108,6 +108,14 @@ args: `window`
 
 ``` purescript
 getTabpage :: forall a. Window -> Aff (plugin :: PLUGIN | a) Tabpage
+```
+
+args: `window`
+
+#### `getNumber`
+
+``` purescript
+getNumber :: forall a. Window -> Aff (plugin :: PLUGIN | a) Int
 ```
 
 args: `window`

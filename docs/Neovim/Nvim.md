@@ -1,635 +1,331 @@
 ## Module Neovim.Nvim
 
-#### `bufLineCount`
-
-``` purescript
-bufLineCount :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Int
-```
-
-args: `buffer`
-
-#### `bufGetLines`
-
-``` purescript
-bufGetLines :: forall a. Buffer -> Int -> Int -> Boolean -> Aff (plugin :: PLUGIN | a) (Array String)
-```
-
-args: `buffer start end strict_indexing`
-
-#### `bufSetLines`
-
-``` purescript
-bufSetLines :: forall a. Buffer -> Int -> Int -> Boolean -> (Array String) -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `buffer start end strict_indexing replacement`
-
-#### `bufGetVar`
-
-``` purescript
-bufGetVar :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Foreign
-```
-
-args: `buffer name`
-
-#### `bufSetVar`
-
-``` purescript
-bufSetVar :: forall a. Buffer -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `buffer name value`
-
-#### `bufDelVar`
-
-``` purescript
-bufDelVar :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `buffer name`
-
-#### `bufGetOption`
-
-``` purescript
-bufGetOption :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Foreign
-```
-
-args: `buffer name`
-
-#### `bufSetOption`
-
-``` purescript
-bufSetOption :: forall a. Buffer -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `buffer name value`
-
-#### `bufGetNumber`
-
-``` purescript
-bufGetNumber :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Int
-```
-
-args: `buffer`
-
-#### `bufGetName`
-
-``` purescript
-bufGetName :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) String
-```
-
-args: `buffer`
-
-#### `bufSetName`
-
-``` purescript
-bufSetName :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `buffer name`
-
-#### `bufIsValid`
-
-``` purescript
-bufIsValid :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Boolean
-```
-
-args: `buffer`
-
-#### `bufGetMark`
-
-``` purescript
-bufGetMark :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) (Array Int)
-```
-
-args: `buffer name`
-
-#### `bufAddHighlight`
-
-``` purescript
-bufAddHighlight :: forall a. Buffer -> Int -> String -> Int -> Int -> Int -> Aff (plugin :: PLUGIN | a) Int
-```
-
-args: `buffer src_id hl_group line col_start col_end`
-
-#### `bufClearHighlight`
-
-``` purescript
-bufClearHighlight :: forall a. Buffer -> Int -> Int -> Int -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `buffer src_id line_start line_end`
-
-#### `tabpageListWins`
-
-``` purescript
-tabpageListWins :: forall a. Tabpage -> Aff (plugin :: PLUGIN | a) (Array Window)
-```
-
-args: `tabpage`
-
-#### `tabpageGetVar`
-
-``` purescript
-tabpageGetVar :: forall a. Tabpage -> String -> Aff (plugin :: PLUGIN | a) Foreign
-```
-
-args: `tabpage name`
-
-#### `tabpageSetVar`
-
-``` purescript
-tabpageSetVar :: forall a. Tabpage -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `tabpage name value`
-
-#### `tabpageDelVar`
-
-``` purescript
-tabpageDelVar :: forall a. Tabpage -> String -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `tabpage name`
-
-#### `tabpageGetWin`
-
-``` purescript
-tabpageGetWin :: forall a. Tabpage -> Aff (plugin :: PLUGIN | a) Window
-```
-
-args: `tabpage`
-
-#### `tabpageGetNumber`
-
-``` purescript
-tabpageGetNumber :: forall a. Tabpage -> Aff (plugin :: PLUGIN | a) Int
-```
-
-args: `tabpage`
-
-#### `tabpageIsValid`
-
-``` purescript
-tabpageIsValid :: forall a. Tabpage -> Aff (plugin :: PLUGIN | a) Boolean
-```
-
-args: `tabpage`
-
 #### `uiAttach`
 
 ``` purescript
-uiAttach :: forall a. Int -> Int -> (StrMap String) -> Aff (plugin :: PLUGIN | a) Unit
+uiAttach :: forall a. Nvim -> Int -> Int -> (StrMap String) -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `width height options`
+args: `nvim width height options`
 
 #### `uiDetach`
 
 ``` purescript
-uiDetach :: forall a. Aff (plugin :: PLUGIN | a) Unit
+uiDetach :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: ``
+args: `nvim`
 
 #### `uiTryResize`
 
 ``` purescript
-uiTryResize :: forall a. Int -> Int -> Aff (plugin :: PLUGIN | a) Unit
+uiTryResize :: forall a. Nvim -> Int -> Int -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `width height`
+args: `nvim width height`
 
 #### `uiSetOption`
 
 ``` purescript
-uiSetOption :: forall a. String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
+uiSetOption :: forall a. Nvim -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `name value`
+args: `nvim name value`
 
 #### `command`
 
 ``` purescript
-command :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
+command :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `command`
+args: `nvim command`
 
 #### `feedkeys`
 
 ``` purescript
-feedkeys :: forall a. String -> String -> Boolean -> Aff (plugin :: PLUGIN | a) Unit
+feedkeys :: forall a. Nvim -> String -> String -> Boolean -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `keys mode escape_csi`
+args: `nvim keys mode escape_csi`
 
 #### `input`
 
 ``` purescript
-input :: forall a. String -> Aff (plugin :: PLUGIN | a) Int
+input :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Int
 ```
 
-args: `keys`
+args: `nvim keys`
 
 #### `replaceTermcodes`
 
 ``` purescript
-replaceTermcodes :: forall a. String -> Boolean -> Boolean -> Boolean -> Aff (plugin :: PLUGIN | a) String
+replaceTermcodes :: forall a. Nvim -> String -> Boolean -> Boolean -> Boolean -> Aff (plugin :: PLUGIN | a) String
 ```
 
-args: `str from_part do_lt special`
+args: `nvim str from_part do_lt special`
 
 #### `commandOutput`
 
 ``` purescript
-commandOutput :: forall a. String -> Aff (plugin :: PLUGIN | a) String
+commandOutput :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) String
 ```
 
-args: `str`
+args: `nvim str`
 
 #### `eval`
 
 ``` purescript
-eval :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
+eval :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Foreign
 ```
 
-args: `expr`
+args: `nvim expr`
 
 #### `callFunction`
 
 ``` purescript
-callFunction :: forall a. String -> (Array Foreign) -> Aff (plugin :: PLUGIN | a) Foreign
+callFunction :: forall a. Nvim -> String -> (Array Foreign) -> Aff (plugin :: PLUGIN | a) Foreign
 ```
 
-args: `fname args`
+args: `nvim fname args`
 
 #### `strwidth`
 
 ``` purescript
-strwidth :: forall a. String -> Aff (plugin :: PLUGIN | a) Int
+strwidth :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Int
 ```
 
-args: `str`
+args: `nvim str`
 
 #### `listRuntimePaths`
 
 ``` purescript
-listRuntimePaths :: forall a. Aff (plugin :: PLUGIN | a) (Array String)
+listRuntimePaths :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) (Array String)
 ```
 
-args: ``
+args: `nvim`
 
 #### `setCurrentDir`
 
 ``` purescript
-setCurrentDir :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentDir :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `dir`
+args: `nvim dir`
 
 #### `getCurrentLine`
 
 ``` purescript
-getCurrentLine :: forall a. Aff (plugin :: PLUGIN | a) String
+getCurrentLine :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) String
 ```
 
-args: ``
+args: `nvim`
 
 #### `setCurrentLine`
 
 ``` purescript
-setCurrentLine :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentLine :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `line`
+args: `nvim line`
 
 #### `delCurrentLine`
 
 ``` purescript
-delCurrentLine :: forall a. Aff (plugin :: PLUGIN | a) Unit
+delCurrentLine :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: ``
+args: `nvim`
 
 #### `getVar`
 
 ``` purescript
-getVar :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
+getVar :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Foreign
 ```
 
-args: `name`
+args: `nvim name`
 
 #### `setVar`
 
 ``` purescript
-setVar :: forall a. String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
+setVar :: forall a. Nvim -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `name value`
+args: `nvim name value`
 
 #### `delVar`
 
 ``` purescript
-delVar :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
+delVar :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `name`
+args: `nvim name`
 
 #### `getVvar`
 
 ``` purescript
-getVvar :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
+getVvar :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Foreign
 ```
 
-args: `name`
+args: `nvim name`
 
 #### `getOption`
 
 ``` purescript
-getOption :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
+getOption :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Foreign
 ```
 
-args: `name`
+args: `nvim name`
 
 #### `setOption`
 
 ``` purescript
-setOption :: forall a. String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
+setOption :: forall a. Nvim -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `name value`
+args: `nvim name value`
 
 #### `outWrite`
 
 ``` purescript
-outWrite :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
+outWrite :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `str`
+args: `nvim str`
 
 #### `errWrite`
 
 ``` purescript
-errWrite :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
+errWrite :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `str`
+args: `nvim str`
 
 #### `errWriteln`
 
 ``` purescript
-errWriteln :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
+errWriteln :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `str`
+args: `nvim str`
 
 #### `listBufs`
 
 ``` purescript
-listBufs :: forall a. Aff (plugin :: PLUGIN | a) (Array Buffer)
+listBufs :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) (Array Buffer)
 ```
 
-args: ``
+args: `nvim`
 
 #### `getCurrentBuf`
 
 ``` purescript
-getCurrentBuf :: forall a. Aff (plugin :: PLUGIN | a) Buffer
+getCurrentBuf :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) Buffer
 ```
 
-args: ``
+args: `nvim`
 
 #### `setCurrentBuf`
 
 ``` purescript
-setCurrentBuf :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentBuf :: forall a. Nvim -> Buffer -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `buffer`
+args: `nvim buffer`
 
 #### `listWins`
 
 ``` purescript
-listWins :: forall a. Aff (plugin :: PLUGIN | a) (Array Window)
+listWins :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) (Array Window)
 ```
 
-args: ``
+args: `nvim`
 
 #### `getCurrentWin`
 
 ``` purescript
-getCurrentWin :: forall a. Aff (plugin :: PLUGIN | a) Window
+getCurrentWin :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) Window
 ```
 
-args: ``
+args: `nvim`
 
 #### `setCurrentWin`
 
 ``` purescript
-setCurrentWin :: forall a. Window -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentWin :: forall a. Nvim -> Window -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `window`
+args: `nvim window`
 
 #### `listTabpages`
 
 ``` purescript
-listTabpages :: forall a. Aff (plugin :: PLUGIN | a) (Array Tabpage)
+listTabpages :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) (Array Tabpage)
 ```
 
-args: ``
+args: `nvim`
 
 #### `getCurrentTabpage`
 
 ``` purescript
-getCurrentTabpage :: forall a. Aff (plugin :: PLUGIN | a) Tabpage
+getCurrentTabpage :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) Tabpage
 ```
 
-args: ``
+args: `nvim`
 
 #### `setCurrentTabpage`
 
 ``` purescript
-setCurrentTabpage :: forall a. Tabpage -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentTabpage :: forall a. Nvim -> Tabpage -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `tabpage`
+args: `nvim tabpage`
 
 #### `subscribe`
 
 ``` purescript
-subscribe :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
+subscribe :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `event`
+args: `nvim event`
 
 #### `unsubscribe`
 
 ``` purescript
-unsubscribe :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
+unsubscribe :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
-args: `event`
+args: `nvim event`
 
 #### `getColorByName`
 
 ``` purescript
-getColorByName :: forall a. String -> Aff (plugin :: PLUGIN | a) Int
+getColorByName :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Int
 ```
 
-args: `name`
+args: `nvim name`
 
 #### `getColorMap`
 
 ``` purescript
-getColorMap :: forall a. Aff (plugin :: PLUGIN | a) (StrMap String)
+getColorMap :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) (StrMap String)
 ```
 
-args: ``
+args: `nvim`
 
 #### `getApiInfo`
 
 ``` purescript
-getApiInfo :: forall a. Aff (plugin :: PLUGIN | a) (Array Foreign)
+getApiInfo :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) (Array Foreign)
 ```
 
-args: ``
+args: `nvim`
 
 #### `callAtomic`
 
 ``` purescript
-callAtomic :: forall a. (Array Foreign) -> Aff (plugin :: PLUGIN | a) (Array Foreign)
+callAtomic :: forall a. Nvim -> (Array Foreign) -> Aff (plugin :: PLUGIN | a) (Array Foreign)
 ```
 
-args: `calls`
-
-#### `winGetBuf`
-
-``` purescript
-winGetBuf :: forall a. Window -> Aff (plugin :: PLUGIN | a) Buffer
-```
-
-args: `window`
-
-#### `winGetCursor`
-
-``` purescript
-winGetCursor :: forall a. Window -> Aff (plugin :: PLUGIN | a) (Array Int)
-```
-
-args: `window`
-
-#### `winSetCursor`
-
-``` purescript
-winSetCursor :: forall a. Window -> (Array Int) -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `window pos`
-
-#### `winGetHeight`
-
-``` purescript
-winGetHeight :: forall a. Window -> Aff (plugin :: PLUGIN | a) Int
-```
-
-args: `window`
-
-#### `winSetHeight`
-
-``` purescript
-winSetHeight :: forall a. Window -> Int -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `window height`
-
-#### `winGetWidth`
-
-``` purescript
-winGetWidth :: forall a. Window -> Aff (plugin :: PLUGIN | a) Int
-```
-
-args: `window`
-
-#### `winSetWidth`
-
-``` purescript
-winSetWidth :: forall a. Window -> Int -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `window width`
-
-#### `winGetVar`
-
-``` purescript
-winGetVar :: forall a. Window -> String -> Aff (plugin :: PLUGIN | a) Foreign
-```
-
-args: `window name`
-
-#### `winSetVar`
-
-``` purescript
-winSetVar :: forall a. Window -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `window name value`
-
-#### `winDelVar`
-
-``` purescript
-winDelVar :: forall a. Window -> String -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `window name`
-
-#### `winGetOption`
-
-``` purescript
-winGetOption :: forall a. Window -> String -> Aff (plugin :: PLUGIN | a) Foreign
-```
-
-args: `window name`
-
-#### `winSetOption`
-
-``` purescript
-winSetOption :: forall a. Window -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `window name value`
-
-#### `winGetPosition`
-
-``` purescript
-winGetPosition :: forall a. Window -> Aff (plugin :: PLUGIN | a) (Array Int)
-```
-
-args: `window`
-
-#### `winGetTabpage`
-
-``` purescript
-winGetTabpage :: forall a. Window -> Aff (plugin :: PLUGIN | a) Tabpage
-```
-
-args: `window`
-
-#### `winGetNumber`
-
-``` purescript
-winGetNumber :: forall a. Window -> Aff (plugin :: PLUGIN | a) Int
-```
-
-args: `window`
-
-#### `winIsValid`
-
-``` purescript
-winIsValid :: forall a. Window -> Aff (plugin :: PLUGIN | a) Boolean
-```
-
-args: `window`
+args: `nvim calls`
 
 

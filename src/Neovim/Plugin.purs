@@ -21,7 +21,7 @@ import Data.Maybe (Maybe(Nothing))
 import Data.Nullable (toNullable)
 import Data.StrMap (insert, singleton, StrMap)
 
-import Neovim.Types (Vim)
+import Neovim.Types (Nvim)
 
 -- | The `PLUGIN` effect is used for all interactions with the Neovim process
 -- | via the messagepack rpc api.
@@ -85,25 +85,25 @@ runHandlerSync' aff done = ignore $ runAff (flip (wrapDone done) null) (wrapDone
 -- | When the command only applies to one line, that line number is repeated.
 foreign import command' :: forall e. String
                                      -> Opts
-                                     -> (Vim -> Args -> Range -> Eff (plugin :: PLUGIN | e) Unit)
+                                     -> (Nvim -> Args -> Range -> Eff (plugin :: PLUGIN | e) Unit)
                                      -> Eff (plugin :: PLUGIN | e) Unit
 
 -- | Define a new Neovim command.
 command :: forall e. String
                      -> Opts
-                     -> (Vim -> Args -> Range -> Aff (plugin :: PLUGIN | e) Unit)
+                     -> (Nvim -> Args -> Range -> Aff (plugin :: PLUGIN | e) Unit)
                      -> Eff (plugin :: PLUGIN | e) Unit
 command name opts = command' name opts <<< compose13 runHandler
 
 foreign import commandSync' :: forall e. String
                                          -> Opts
-                                         -> (Vim -> Args -> Range -> Done -> Eff (plugin :: PLUGIN | e) Unit)
+                                         -> (Nvim -> Args -> Range -> Done -> Eff (plugin :: PLUGIN | e) Unit)
                                          -> Eff (plugin :: PLUGIN | e) Unit
 
 -- | Define a new Neovim command that will block until it completes.
 commandSync :: forall e. String
                          -> Opts
-                         -> (Vim -> Args -> Range -> Aff (plugin :: PLUGIN | e) Unit)
+                         -> (Nvim -> Args -> Range -> Aff (plugin :: PLUGIN | e) Unit)
                          -> Eff (plugin :: PLUGIN | e) Unit
 commandSync name opts cmd = commandSync' name opts \vim args range done -> runHandlerSync done (cmd vim args range)
 
@@ -111,41 +111,41 @@ commandSync name opts cmd = commandSync' name opts \vim args range done -> runHa
 -- | The second argument is the filename corresponding the the buffer the event was triggered on.
 foreign import autocmd' :: forall e. String
                                      -> Opts
-                                     -> (Vim -> String -> Eff (plugin :: PLUGIN | e) Unit)
+                                     -> (Nvim -> String -> Eff (plugin :: PLUGIN | e) Unit)
                                      -> Eff (plugin :: PLUGIN | e) Unit
 
 -- | Define a new Neovim autocmd.
 autocmd :: forall e. String
                      -> Opts
-                     -> (Vim -> String -> Aff (plugin :: PLUGIN | e) Unit)
+                     -> (Nvim -> String -> Aff (plugin :: PLUGIN | e) Unit)
                      -> Eff (plugin :: PLUGIN | e) Unit
 autocmd name opts = autocmd' name opts <<< compose12 runHandler
 
 foreign import autocmdSync' :: forall e. String
                                          -> Opts
-                                         -> (Vim -> String -> Done -> Eff (plugin :: PLUGIN | e) Unit)
+                                         -> (Nvim -> String -> Done -> Eff (plugin :: PLUGIN | e) Unit)
                                          -> Eff (plugin :: PLUGIN | e) Unit
 
 -- | Define a new Neovim autocmd that will block until it completes.
 autocmdSync :: forall e. String
                          -> Opts
-                         -> (Vim -> String -> Aff (plugin :: PLUGIN | e) Unit)
+                         -> (Nvim -> String -> Aff (plugin :: PLUGIN | e) Unit)
                          -> Eff (plugin :: PLUGIN | e) Unit
 autocmdSync name opts cmd = autocmdSync' name opts \vim filename done -> runHandlerSync done (cmd vim filename)
 
 
 foreign import function' :: forall e. String
-                                      -> (Vim -> Args -> Eff (plugin :: PLUGIN | e) Unit)
+                                      -> (Nvim -> Args -> Eff (plugin :: PLUGIN | e) Unit)
                                       -> Eff (plugin :: PLUGIN | e) Unit
 
 -- | Define a new Neovim function.
-function :: forall e. String -> (Vim -> Args -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
+function :: forall e. String -> (Nvim -> Args -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
 function name = function' name <<< compose12 runHandler
 
 foreign import functionSync' :: forall e. String
-                                          -> (Vim -> Args -> Done -> Eff (plugin :: PLUGIN | e) Unit)
+                                          -> (Nvim -> Args -> Done -> Eff (plugin :: PLUGIN | e) Unit)
                                           -> Eff (plugin :: PLUGIN | e) Unit
 
 -- | Define a new Neovim function that will block until it completes.
-functionSync :: forall e. String -> (Vim -> Args -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
+functionSync :: forall e. String -> (Nvim -> Args -> Aff (plugin :: PLUGIN | e) Unit) -> Eff (plugin :: PLUGIN | e) Unit
 functionSync name func = functionSync' name \vim args done -> runHandlerSync done (func vim args)

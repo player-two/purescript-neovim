@@ -1,69 +1,5 @@
 ## Module Neovim.Buffer
 
-#### `getLine`
-
-``` purescript
-getLine :: forall a. Buffer -> Int -> Aff (plugin :: PLUGIN | a) String
-```
-
-args: `buffer index`
-
-#### `setLine`
-
-``` purescript
-setLine :: forall a. Buffer -> Int -> String -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `buffer index line`
-
-#### `delLine`
-
-``` purescript
-delLine :: forall a. Buffer -> Int -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `buffer index`
-
-#### `getLineSlice`
-
-``` purescript
-getLineSlice :: forall a. Buffer -> Int -> Int -> Boolean -> Boolean -> Aff (plugin :: PLUGIN | a) (Array String)
-```
-
-args: `buffer start end include_start include_end`
-
-#### `setLineSlice`
-
-``` purescript
-setLineSlice :: forall a. Buffer -> Int -> Int -> Boolean -> Boolean -> (Array String) -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `buffer start end include_start include_end replacement`
-
-#### `setVar`
-
-``` purescript
-setVar :: forall a. Buffer -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Foreign
-```
-
-args: `buffer name value`
-
-#### `delVar`
-
-``` purescript
-delVar :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Foreign
-```
-
-args: `buffer name`
-
-#### `insert`
-
-``` purescript
-insert :: forall a. Buffer -> Int -> (Array String) -> Aff (plugin :: PLUGIN | a) Unit
-```
-
-args: `buffer lnum lines`
-
 #### `lineCount`
 
 ``` purescript
@@ -92,6 +28,22 @@ args: `buffer start end strict_indexing replacement`
 
 ``` purescript
 getVar :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Foreign
+```
+
+args: `buffer name`
+
+#### `setVar`
+
+``` purescript
+setVar :: forall a. Buffer -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
+```
+
+args: `buffer name value`
+
+#### `delVar`
+
+``` purescript
+delVar :: forall a. Buffer -> String -> Aff (plugin :: PLUGIN | a) Unit
 ```
 
 args: `buffer name`

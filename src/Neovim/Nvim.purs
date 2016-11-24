@@ -53,290 +53,290 @@ import Neovim.Plugin (PLUGIN)
 import Neovim.Types
 
 
-foreign import uiAttach' :: forall e1 e2. Vim -> Int -> Int -> (StrMap String) -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import uiAttach' :: forall e1 e2. Nvim -> Int -> Int -> (StrMap String) -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `vim width height options`
-uiAttach :: forall a. Vim -> Int -> Int -> (StrMap String) -> Aff (plugin :: PLUGIN | a) Unit
-uiAttach vim width height options = makeAff $ uiAttach' vim width height options
+-- | args: `nvim width height options`
+uiAttach :: forall a. Nvim -> Int -> Int -> (StrMap String) -> Aff (plugin :: PLUGIN | a) Unit
+uiAttach nvim width height options = makeAff $ uiAttach' nvim width height options
 
 
-foreign import uiDetach' :: forall e1 e2. Vim -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import uiDetach' :: forall e1 e2. Nvim -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `vim`
-uiDetach :: forall a. Vim -> Aff (plugin :: PLUGIN | a) Unit
-uiDetach vim = makeAff $ uiDetach' vim
+-- | args: `nvim`
+uiDetach :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) Unit
+uiDetach nvim = makeAff $ uiDetach' nvim
 
 
-foreign import uiTryResize' :: forall e1 e2. Vim -> Int -> Int -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import uiTryResize' :: forall e1 e2. Nvim -> Int -> Int -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `vim width height`
-uiTryResize :: forall a. Vim -> Int -> Int -> Aff (plugin :: PLUGIN | a) Unit
-uiTryResize vim width height = makeAff $ uiTryResize' vim width height
+-- | args: `nvim width height`
+uiTryResize :: forall a. Nvim -> Int -> Int -> Aff (plugin :: PLUGIN | a) Unit
+uiTryResize nvim width height = makeAff $ uiTryResize' nvim width height
 
 
-foreign import uiSetOption' :: forall e1 e2. Vim -> String -> Foreign -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import uiSetOption' :: forall e1 e2. Nvim -> String -> Foreign -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `vim name value`
-uiSetOption :: forall a. Vim -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
-uiSetOption vim name value = makeAff $ uiSetOption' vim name value
+-- | args: `nvim name value`
+uiSetOption :: forall a. Nvim -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
+uiSetOption nvim name value = makeAff $ uiSetOption' nvim name value
 
 
-foreign import command' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import command' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `command`
-command :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-command command = makeAff $ command' command
+-- | args: `nvim command`
+command :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
+command nvim command = makeAff $ command' nvim command
 
 
-foreign import feedkeys' :: forall e1 e2. String -> String -> Boolean -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import feedkeys' :: forall e1 e2. Nvim -> String -> String -> Boolean -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `keys mode escape_csi`
-feedkeys :: forall a. String -> String -> Boolean -> Aff (plugin :: PLUGIN | a) Unit
-feedkeys keys mode escape_csi = makeAff $ feedkeys' keys mode escape_csi
+-- | args: `nvim keys mode escape_csi`
+feedkeys :: forall a. Nvim -> String -> String -> Boolean -> Aff (plugin :: PLUGIN | a) Unit
+feedkeys nvim keys mode escape_csi = makeAff $ feedkeys' nvim keys mode escape_csi
 
 
-foreign import input' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Int -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import input' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Int -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `keys`
-input :: forall a. String -> Aff (plugin :: PLUGIN | a) Int
-input keys = makeAff $ input' keys
+-- | args: `nvim keys`
+input :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Int
+input nvim keys = makeAff $ input' nvim keys
 
 
-foreign import replaceTermcodes' :: forall e1 e2. String -> Boolean -> Boolean -> Boolean -> (Error -> Eff e1 Unit) -> (String -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import replaceTermcodes' :: forall e1 e2. Nvim -> String -> Boolean -> Boolean -> Boolean -> (Error -> Eff e1 Unit) -> (String -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `str from_part do_lt special`
-replaceTermcodes :: forall a. String -> Boolean -> Boolean -> Boolean -> Aff (plugin :: PLUGIN | a) String
-replaceTermcodes str from_part do_lt special = makeAff $ replaceTermcodes' str from_part do_lt special
+-- | args: `nvim str from_part do_lt special`
+replaceTermcodes :: forall a. Nvim -> String -> Boolean -> Boolean -> Boolean -> Aff (plugin :: PLUGIN | a) String
+replaceTermcodes nvim str from_part do_lt special = makeAff $ replaceTermcodes' nvim str from_part do_lt special
 
 
-foreign import commandOutput' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (String -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import commandOutput' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (String -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `str`
-commandOutput :: forall a. String -> Aff (plugin :: PLUGIN | a) String
-commandOutput str = makeAff $ commandOutput' str
+-- | args: `nvim str`
+commandOutput :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) String
+commandOutput nvim str = makeAff $ commandOutput' nvim str
 
 
-foreign import eval' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import eval' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `expr`
-eval :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
-eval expr = makeAff $ eval' expr
+-- | args: `nvim expr`
+eval :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Foreign
+eval nvim expr = makeAff $ eval' nvim expr
 
 
-foreign import callFunction' :: forall e1 e2. String -> (Array Foreign) -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import callFunction' :: forall e1 e2. Nvim -> String -> (Array Foreign) -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `fname args`
-callFunction :: forall a. String -> (Array Foreign) -> Aff (plugin :: PLUGIN | a) Foreign
-callFunction fname args = makeAff $ callFunction' fname args
+-- | args: `nvim fname args`
+callFunction :: forall a. Nvim -> String -> (Array Foreign) -> Aff (plugin :: PLUGIN | a) Foreign
+callFunction nvim fname args = makeAff $ callFunction' nvim fname args
 
 
-foreign import strwidth' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Int -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import strwidth' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Int -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `str`
-strwidth :: forall a. String -> Aff (plugin :: PLUGIN | a) Int
-strwidth str = makeAff $ strwidth' str
+-- | args: `nvim str`
+strwidth :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Int
+strwidth nvim str = makeAff $ strwidth' nvim str
 
 
-foreign import listRuntimePaths' :: forall e1 e2. (Error -> Eff e1 Unit) -> ((Array String) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import listRuntimePaths' :: forall e1 e2. Nvim -> (Error -> Eff e1 Unit) -> ((Array String) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: ``
-listRuntimePaths :: forall a. Aff (plugin :: PLUGIN | a) (Array String)
-listRuntimePaths  = makeAff $ listRuntimePaths' 
+-- | args: `nvim`
+listRuntimePaths :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) (Array String)
+listRuntimePaths nvim = makeAff $ listRuntimePaths' nvim
 
 
-foreign import setCurrentDir' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import setCurrentDir' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `dir`
-setCurrentDir :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-setCurrentDir dir = makeAff $ setCurrentDir' dir
+-- | args: `nvim dir`
+setCurrentDir :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentDir nvim dir = makeAff $ setCurrentDir' nvim dir
 
 
-foreign import getCurrentLine' :: forall e1 e2. (Error -> Eff e1 Unit) -> (String -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import getCurrentLine' :: forall e1 e2. Nvim -> (Error -> Eff e1 Unit) -> (String -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: ``
-getCurrentLine :: forall a. Aff (plugin :: PLUGIN | a) String
-getCurrentLine  = makeAff $ getCurrentLine' 
+-- | args: `nvim`
+getCurrentLine :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) String
+getCurrentLine nvim = makeAff $ getCurrentLine' nvim
 
 
-foreign import setCurrentLine' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import setCurrentLine' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `line`
-setCurrentLine :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-setCurrentLine line = makeAff $ setCurrentLine' line
+-- | args: `nvim line`
+setCurrentLine :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentLine nvim line = makeAff $ setCurrentLine' nvim line
 
 
-foreign import delCurrentLine' :: forall e1 e2. (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import delCurrentLine' :: forall e1 e2. Nvim -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: ``
-delCurrentLine :: forall a. Aff (plugin :: PLUGIN | a) Unit
-delCurrentLine  = makeAff $ delCurrentLine' 
+-- | args: `nvim`
+delCurrentLine :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) Unit
+delCurrentLine nvim = makeAff $ delCurrentLine' nvim
 
 
-foreign import getVar' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import getVar' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `name`
-getVar :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
-getVar name = makeAff $ getVar' name
+-- | args: `nvim name`
+getVar :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Foreign
+getVar nvim name = makeAff $ getVar' nvim name
 
 
-foreign import setVar' :: forall e1 e2. String -> Foreign -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import setVar' :: forall e1 e2. Nvim -> String -> Foreign -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `name value`
-setVar :: forall a. String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
-setVar name value = makeAff $ setVar' name value
+-- | args: `nvim name value`
+setVar :: forall a. Nvim -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
+setVar nvim name value = makeAff $ setVar' nvim name value
 
 
-foreign import delVar' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import delVar' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `name`
-delVar :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-delVar name = makeAff $ delVar' name
+-- | args: `nvim name`
+delVar :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
+delVar nvim name = makeAff $ delVar' nvim name
 
 
-foreign import getVvar' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import getVvar' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `name`
-getVvar :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
-getVvar name = makeAff $ getVvar' name
+-- | args: `nvim name`
+getVvar :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Foreign
+getVvar nvim name = makeAff $ getVvar' nvim name
 
 
-foreign import getOption' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import getOption' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Foreign -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `name`
-getOption :: forall a. String -> Aff (plugin :: PLUGIN | a) Foreign
-getOption name = makeAff $ getOption' name
+-- | args: `nvim name`
+getOption :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Foreign
+getOption nvim name = makeAff $ getOption' nvim name
 
 
-foreign import setOption' :: forall e1 e2. String -> Foreign -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import setOption' :: forall e1 e2. Nvim -> String -> Foreign -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `name value`
-setOption :: forall a. String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
-setOption name value = makeAff $ setOption' name value
+-- | args: `nvim name value`
+setOption :: forall a. Nvim -> String -> Foreign -> Aff (plugin :: PLUGIN | a) Unit
+setOption nvim name value = makeAff $ setOption' nvim name value
 
 
-foreign import outWrite' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import outWrite' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `str`
-outWrite :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-outWrite str = makeAff $ outWrite' str
+-- | args: `nvim str`
+outWrite :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
+outWrite nvim str = makeAff $ outWrite' nvim str
 
 
-foreign import errWrite' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import errWrite' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `str`
-errWrite :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-errWrite str = makeAff $ errWrite' str
+-- | args: `nvim str`
+errWrite :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
+errWrite nvim str = makeAff $ errWrite' nvim str
 
 
-foreign import errWriteln' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import errWriteln' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `str`
-errWriteln :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-errWriteln str = makeAff $ errWriteln' str
+-- | args: `nvim str`
+errWriteln :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
+errWriteln nvim str = makeAff $ errWriteln' nvim str
 
 
-foreign import listBufs' :: forall e1 e2. (Error -> Eff e1 Unit) -> ((Array Buffer) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import listBufs' :: forall e1 e2. Nvim -> (Error -> Eff e1 Unit) -> ((Array Buffer) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: ``
-listBufs :: forall a. Aff (plugin :: PLUGIN | a) (Array Buffer)
-listBufs  = makeAff $ listBufs' 
+-- | args: `nvim`
+listBufs :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) (Array Buffer)
+listBufs nvim = makeAff $ listBufs' nvim
 
 
-foreign import getCurrentBuf' :: forall e1 e2. (Error -> Eff e1 Unit) -> (Buffer -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import getCurrentBuf' :: forall e1 e2. Nvim -> (Error -> Eff e1 Unit) -> (Buffer -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: ``
-getCurrentBuf :: forall a. Aff (plugin :: PLUGIN | a) Buffer
-getCurrentBuf  = makeAff $ getCurrentBuf' 
+-- | args: `nvim`
+getCurrentBuf :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) Buffer
+getCurrentBuf nvim = makeAff $ getCurrentBuf' nvim
 
 
-foreign import setCurrentBuf' :: forall e1 e2. Buffer -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import setCurrentBuf' :: forall e1 e2. Nvim -> Buffer -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `buffer`
-setCurrentBuf :: forall a. Buffer -> Aff (plugin :: PLUGIN | a) Unit
-setCurrentBuf buffer = makeAff $ setCurrentBuf' buffer
+-- | args: `nvim buffer`
+setCurrentBuf :: forall a. Nvim -> Buffer -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentBuf nvim buffer = makeAff $ setCurrentBuf' nvim buffer
 
 
-foreign import listWins' :: forall e1 e2. (Error -> Eff e1 Unit) -> ((Array Window) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import listWins' :: forall e1 e2. Nvim -> (Error -> Eff e1 Unit) -> ((Array Window) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: ``
-listWins :: forall a. Aff (plugin :: PLUGIN | a) (Array Window)
-listWins  = makeAff $ listWins' 
+-- | args: `nvim`
+listWins :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) (Array Window)
+listWins nvim = makeAff $ listWins' nvim
 
 
-foreign import getCurrentWin' :: forall e1 e2. (Error -> Eff e1 Unit) -> (Window -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import getCurrentWin' :: forall e1 e2. Nvim -> (Error -> Eff e1 Unit) -> (Window -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: ``
-getCurrentWin :: forall a. Aff (plugin :: PLUGIN | a) Window
-getCurrentWin  = makeAff $ getCurrentWin' 
+-- | args: `nvim`
+getCurrentWin :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) Window
+getCurrentWin nvim = makeAff $ getCurrentWin' nvim
 
 
-foreign import setCurrentWin' :: forall e1 e2. Window -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import setCurrentWin' :: forall e1 e2. Nvim -> Window -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `window`
-setCurrentWin :: forall a. Window -> Aff (plugin :: PLUGIN | a) Unit
-setCurrentWin window = makeAff $ setCurrentWin' window
+-- | args: `nvim window`
+setCurrentWin :: forall a. Nvim -> Window -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentWin nvim window = makeAff $ setCurrentWin' nvim window
 
 
-foreign import listTabpages' :: forall e1 e2. (Error -> Eff e1 Unit) -> ((Array Tabpage) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import listTabpages' :: forall e1 e2. Nvim -> (Error -> Eff e1 Unit) -> ((Array Tabpage) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: ``
-listTabpages :: forall a. Aff (plugin :: PLUGIN | a) (Array Tabpage)
-listTabpages  = makeAff $ listTabpages' 
+-- | args: `nvim`
+listTabpages :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) (Array Tabpage)
+listTabpages nvim = makeAff $ listTabpages' nvim
 
 
-foreign import getCurrentTabpage' :: forall e1 e2. (Error -> Eff e1 Unit) -> (Tabpage -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import getCurrentTabpage' :: forall e1 e2. Nvim -> (Error -> Eff e1 Unit) -> (Tabpage -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: ``
-getCurrentTabpage :: forall a. Aff (plugin :: PLUGIN | a) Tabpage
-getCurrentTabpage  = makeAff $ getCurrentTabpage' 
+-- | args: `nvim`
+getCurrentTabpage :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) Tabpage
+getCurrentTabpage nvim = makeAff $ getCurrentTabpage' nvim
 
 
-foreign import setCurrentTabpage' :: forall e1 e2. Tabpage -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import setCurrentTabpage' :: forall e1 e2. Nvim -> Tabpage -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `tabpage`
-setCurrentTabpage :: forall a. Tabpage -> Aff (plugin :: PLUGIN | a) Unit
-setCurrentTabpage tabpage = makeAff $ setCurrentTabpage' tabpage
+-- | args: `nvim tabpage`
+setCurrentTabpage :: forall a. Nvim -> Tabpage -> Aff (plugin :: PLUGIN | a) Unit
+setCurrentTabpage nvim tabpage = makeAff $ setCurrentTabpage' nvim tabpage
 
 
-foreign import subscribe' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import subscribe' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `event`
-subscribe :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-subscribe event = makeAff $ subscribe' event
+-- | args: `nvim event`
+subscribe :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
+subscribe nvim event = makeAff $ subscribe' nvim event
 
 
-foreign import unsubscribe' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import unsubscribe' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Unit -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `event`
-unsubscribe :: forall a. String -> Aff (plugin :: PLUGIN | a) Unit
-unsubscribe event = makeAff $ unsubscribe' event
+-- | args: `nvim event`
+unsubscribe :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Unit
+unsubscribe nvim event = makeAff $ unsubscribe' nvim event
 
 
-foreign import getColorByName' :: forall e1 e2. String -> (Error -> Eff e1 Unit) -> (Int -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import getColorByName' :: forall e1 e2. Nvim -> String -> (Error -> Eff e1 Unit) -> (Int -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `name`
-getColorByName :: forall a. String -> Aff (plugin :: PLUGIN | a) Int
-getColorByName name = makeAff $ getColorByName' name
+-- | args: `nvim name`
+getColorByName :: forall a. Nvim -> String -> Aff (plugin :: PLUGIN | a) Int
+getColorByName nvim name = makeAff $ getColorByName' nvim name
 
 
-foreign import getColorMap' :: forall e1 e2. (Error -> Eff e1 Unit) -> ((StrMap String) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import getColorMap' :: forall e1 e2. Nvim -> (Error -> Eff e1 Unit) -> ((StrMap String) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: ``
-getColorMap :: forall a. Aff (plugin :: PLUGIN | a) (StrMap String)
-getColorMap  = makeAff $ getColorMap' 
+-- | args: `nvim`
+getColorMap :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) (StrMap String)
+getColorMap nvim = makeAff $ getColorMap' nvim
 
 
-foreign import getApiInfo' :: forall e1 e2. (Error -> Eff e1 Unit) -> ((Array Foreign) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import getApiInfo' :: forall e1 e2. Nvim -> (Error -> Eff e1 Unit) -> ((Array Foreign) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: ``
-getApiInfo :: forall a. Aff (plugin :: PLUGIN | a) (Array Foreign)
-getApiInfo  = makeAff $ getApiInfo' 
+-- | args: `nvim`
+getApiInfo :: forall a. Nvim -> Aff (plugin :: PLUGIN | a) (Array Foreign)
+getApiInfo nvim = makeAff $ getApiInfo' nvim
 
 
-foreign import callAtomic' :: forall e1 e2. (Array Foreign) -> (Error -> Eff e1 Unit) -> ((Array Foreign) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
+foreign import callAtomic' :: forall e1 e2. Nvim -> (Array Foreign) -> (Error -> Eff e1 Unit) -> ((Array Foreign) -> Eff e1 Unit) -> Eff (plugin :: PLUGIN | e2) Unit
 
--- | args: `calls`
-callAtomic :: forall a. (Array Foreign) -> Aff (plugin :: PLUGIN | a) (Array Foreign)
-callAtomic calls = makeAff $ callAtomic' calls
+-- | args: `nvim calls`
+callAtomic :: forall a. Nvim -> (Array Foreign) -> Aff (plugin :: PLUGIN | a) (Array Foreign)
+callAtomic nvim calls = makeAff $ callAtomic' nvim calls
 
 

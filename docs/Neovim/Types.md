@@ -1,11 +1,5 @@
 ## Module Neovim.Types
 
-#### `Nvim`
-
-``` purescript
-data Nvim :: *
-```
-
 #### `Buffer`
 
 ``` purescript
@@ -18,16 +12,10 @@ data Buffer :: *
 data Tabpage :: *
 ```
 
-#### `Ui`
+#### `Nvim`
 
 ``` purescript
-data Ui :: *
-```
-
-#### `Vim`
-
-``` purescript
-data Vim :: *
+data Nvim :: *
 ```
 
 #### `Window`
