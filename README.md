@@ -6,11 +6,12 @@ Purescript bindings for the Neovim remote plugin API for use with the [node host
 
 ### Example Installation
 
-* Follow the installation instructions for the node host.
+* Follow the installation instructions for the node host. Currently [version v0.0.1](https://github.com/neovim/node-host/releases/tag/v0.0.1) is required; newer versions will not work.
 * Build the example (you need to create the `rplugin/node` directory if it does not exist)
 ```
 pulp build --src-path example --include src --to ~/.nvim/rplugin/node/purescript-neovim.js
 ```
+This is known to work with [pulp v10.0.4](https://github.com/purescript-contrib/pulp/releases/tag/v10.0.4) and [psc 0.10.2](https://github.com/purescript/purescript/releases/tag/v0.10.2).
 * Update your plugins via `UpdateRemotePlugins`.
 * Restart neovim and run the `HelloPurescript` command.  You should see `Hi back!` appear in the current buffer.
 
